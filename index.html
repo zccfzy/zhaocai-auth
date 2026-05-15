@@ -3,492 +3,680 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>赵财期权末日轮策略 - 试用版授权码申请</title>
+    <title>赵财期权末日轮策略</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 30%, #0d0d12 60%, #0a0505 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 背景粒子 */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 107, 53, 0.4);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; top: 60%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 50%; top: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 70%; top: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(5) { left: 85%; top: 40%; animation-delay: 1.5s; }
+        .particle:nth-child(6) { left: 20%; top: 80%; animation-delay: 2.5s; }
+        .particle:nth-child(7) { left: 65%; top: 15%; animation-delay: 3s; }
+        .particle:nth-child(8) { left: 45%; top: 90%; animation-delay: 1.8s; }
+        .particle:nth-child(9) { left: 90%; top: 55%; animation-delay: 2.2s; }
+        .particle:nth-child(10) { left: 5%; top: 45%; animation-delay: 0.7s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-30px) scale(1.5); opacity: 1; }
+        }
+
+        /* 光晕 */
+        .glow {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.12) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+        .glow-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+            bottom: -80px; left: -80px;
+            animation: pulseGlow 5s ease-in-out infinite;
+        }
+        .glow-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== Nav ===== */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.15);
+            margin-bottom: 40px;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #ff6b35; }
+
+        /* ===== Hero ===== */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            animation: fadeUp 0.8s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 12px;
+            color: #ff6b35;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #ff6b35 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+        .hero-motto {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .hero-motto span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hero-motto .dot {
+            color: #ff6b35;
+        }
+
+        /* ===== Buttons ===== */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #ff6b35, #dc2626);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 25px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(255, 107, 53, 0.6);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 18px 36px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-left: 12px;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ===== Stats ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* ===== Sections ===== */
+        .section {
+            padding: 60px 0;
+            animation: fadeUp 0.8s ease-out;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .section-sub {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* ===== Features ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .features { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            background: rgba(255, 107, 53, 0.05);
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* ===== How it works ===== */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .steps { grid-template-columns: 1fr 1fr; }
+        }
+        .step {
+            text-align: center;
+            padding: 24px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            position: relative;
+        }
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b35, #dc2626);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            background: linear-gradient(135deg, #1a0a0a 0%, #2d1515 30%, #1a0a0a 70%, #0a0505 100%);
-            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 auto 12px;
         }
-        .fire-glow {
-            position: fixed; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
-            border-radius: 50%; animation: pulse-glow 3s ease-in-out infinite; z-index: 0;
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
         }
-        .fire-glow:nth-of-type(1) { left: -100px; bottom: -100px; animation-delay: 1.5s; }
-        .fire-glow:nth-of-type(2) { right: -50px; bottom: -50px; }
-        .battle-scene {
-            position: fixed; inset: 0;
-            background: radial-gradient(ellipse at bottom, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at top right, rgba(220, 38, 38, 0.1) 0%, transparent 40%);
-            z-index: 0;
+        .step-desc {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
         }
-        .smoke {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 30%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent); z-index: 1; pointer-events: none;
+        .step-arrow {
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b35;
+            font-size: 18px;
         }
-        .scanline {
-            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 2px);
-            position: fixed; inset: 0; pointer-events: none; z-index: 100;
+        @media (max-width: 768px) {
+            .step-arrow { display: none; }
         }
-        .noise {
-            position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03; pointer-events: none; z-index: 99;
-        }
-        @keyframes pulse-glow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
-        @keyframes shimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .container { position: relative; z-index: 10; width: 100%; max-width: 480px; }
-        .card {
-            background: rgba(5, 5, 8, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 24px; padding: 24px;
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2), inset 0 0 30px rgba(255, 107, 53, 0.05);
-        }
-        .title-section { text-align: center; margin-bottom: 24px; }
-        .title {
-            font-size: 24px; font-weight: bold;
-            background: linear-gradient(90deg, #ff6b35, #ffd700, #ff6b35);
-            background-size: 200% auto;
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-            display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;
-        }
-        .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 12px; }
-        .motto { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #ff6b35; }
-        .input-group { margin-bottom: 16px; }
-        .input-label { display: block; font-size: 14px; color: #9ca3af; margin-bottom: 8px; }
-        .input-field {
-            width: 100%; background: rgba(10, 10, 15, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.3); border-radius: 12px;
-            padding: 16px 20px; color: #fff; font-size: 16px; outline: none; transition: all 0.3s;
-        }
-        .input-field:focus { border-color: rgba(255, 215, 0, 0.5); box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-        .input-field::placeholder { color: #4b5563; }
-        .input-field.shake { animation: shake 0.5s ease-in-out; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        .btn {
-            width: 100%; background: linear-gradient(90deg, #ff6b35, #dc2626);
-            color: #fff; border: none; border-radius: 12px; padding: 16px;
-            font-size: 16px; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4); transition: all 0.3s;
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6); }
-        .btn-small {
-            background: rgba(255, 107, 53, 0.3); border: 1px solid rgba(255, 107, 53, 0.4);
-            color: #ff6b35; border-radius: 8px; padding: 8px 16px; font-size: 12px; cursor: pointer; transition: all 0.3s;
-        }
-        .btn-small:hover { background: rgba(255, 107, 53, 0.5); }
-        .result-section { margin-top: 24px; animation: fadeIn 0.5s ease-out; }
-        .code-box { background: rgba(10, 10, 15, 0.5); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-        .code-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .code-label { font-size: 12px; color: #6b7280; }
-        .copy-btn {
-            width: 32px; height: 32px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1); border: none; color: #fff;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;
-        }
-        .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
-        .code-textarea {
-            width: 100%; background: rgba(0, 0, 0, 0.5); border: none; border-radius: 8px;
-            padding: 12px; color: #ffd700; font-family: 'Courier New', monospace;
-            font-size: 14px; resize: none; outline: none; min-height: 80px;
-        }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-        .info-box { background: rgba(10, 10, 15, 0.5); border-radius: 12px; padding: 12px; }
-        .info-label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
-        .info-value { font-size: 14px; font-weight: medium; color: #fff; }
-        .info-value.gold { color: #ffd700; }
-        .member-box { background: linear-gradient(90deg, rgba(255, 107, 53, 0.2), rgba(220, 38, 38, 0.2));
-            border: 1px solid rgba(255, 107, 53, 0.3); border-radius: 12px; padding: 16px; text-align: center;
-        }
-        .member-text { color: #ffd700; font-size: 14px; font-weight: medium; }
-        .footer { text-align: center; margin-top: 16px; font-size: 12px; color: #6b7280; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .hidden { display: none; }
-        .alert-box { background: rgba(220, 38, 38, 0.2); border: 1px solid rgba(220, 38, 38, 0.5); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px; }
-        .alert-text { color: #ef4444; font-size: 14px; font-weight: medium; }
-        .alert-subtext { color: #ffd700; font-size: 12px; margin-top: 10px; line-height: 1.8; }
-        .alert-contact { color: #ff6b35; cursor: pointer; }
 
-        /* 管理员面板 */
-        .admin-toggle { text-align: center; margin-top: 16px; }
-        .admin-panel {
-            margin-top: 16px; background: rgba(10, 10, 15, 0.8); border-radius: 12px;
-            border: 1px solid rgba(255, 107, 53, 0.3); padding: 16px; animation: fadeIn 0.3s ease-out;
+        /* ===== Risk ===== */
+        .risk-box {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
         }
-        .admin-title { color: #ff6b35; font-size: 14px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-        .admin-stats { display: flex; gap: 12px; margin-bottom: 12px; }
-        .admin-stat { background: rgba(255, 107, 53, 0.1); border-radius: 8px; padding: 8px 12px; text-align: center; flex: 1; }
-        .admin-stat-num { font-size: 20px; font-weight: bold; color: #ffd700; }
-        .admin-stat-label { font-size: 11px; color: #6b7280; }
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        .admin-table th { background: rgba(255, 107, 53, 0.2); color: #ff6b35; padding: 8px; text-align: left; border-bottom: 1px solid rgba(255, 107, 53, 0.3); }
-        .admin-table td { padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #d1d5db; word-break: break-all; }
-        .admin-table tr:hover td { background: rgba(255, 107, 53, 0.05); }
-        .admin-actions { display: flex; gap: 8px; margin-top: 12px; }
-        .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(255, 107, 53, 0.2); color: #ff6b35; }
-        .link-section { margin-top: 16px; padding: 12px; background: rgba(10, 10, 15, 0.5); border-radius: 12px; border: 1px solid rgba(255, 107, 53, 0.2); }
-        .link-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #9ca3af; }
-        .link-item:last-child { margin-bottom: 0; }
-        .link-item a { color: #ff6b35; text-decoration: none; transition: color 0.3s; }
-        .link-item a:hover { color: #ffd700; }
-        .link-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-        .scroll-wrap { max-height: 300px; overflow-y: auto; }
-        .scroll-wrap::-webkit-scrollbar { width: 6px; }
-        .scroll-wrap::-webkit-scrollbar-track { background: rgba(10, 10, 15, 0.5); border-radius: 3px; }
-        .scroll-wrap::-webkit-scrollbar-thumb { background: rgba(255, 107, 53, 0.4); border-radius: 3px; }
+        .risk-title {
+            color: #ef4444;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .risk-list {
+            list-style: none;
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 2;
+        }
+        .risk-list li::before {
+            content: "⚠️ ";
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 107, 53, 0.1);
+        }
+        .cta h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .cta p {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #4b5563;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-overlay.hidden { display: none; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-box {
+            background: #0d0d12;
+            border: 1px solid rgba(255,107,53,0.3);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-icon { font-size: 48px; margin-bottom: 16px; }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .modal-desc { font-size: 14px; color: #9ca3af; line-height: 1.6; margin-bottom: 24px; }
+        .modal-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff6b35, #dc2626);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+            transition: all 0.3s;
+        }
+        .modal-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255,107,53,0.6);
+        }
+        .modal-close {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .modal-close:hover { color: #fff; }
     </style>
 </head>
-<body oncontextmenu="return false;">
-    <div class="fire-glow"></div>
-    <div class="fire-glow"></div>
-    <div class="battle-scene"></div>
-    <div class="smoke"></div>
-    <div class="scanline"></div>
-    <div class="noise"></div>
+<body>
+
+    <!-- 背景 -->
+    <div class="particles">
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+    </div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
 
     <div class="container">
-        <div class="card">
-            <div class="title-section">
-                <div class="title">
-                    <span>⚔️</span>
-                    <span>赵财期权末日轮策略</span>
-                    <span>🔥</span>
-                </div>
-                <p class="subtitle">试用版授权码申请</p>
-                <div class="motto">
-                    <span>定时重启</span>
-                    <span>·</span>
-                    <span>无限迭代</span>
-                    <span>·</span>
-                    <span>日益增进</span>
-                </div>
+        <!-- Nav -->
+        <div class="nav">
+            <div class="nav-logo">⚔️ 赵财策略</div>
+            <div class="nav-links">
+                <a href="#features">策略优势</a>
+                <a href="#how">使用流程</a>
+                <a href="#risk">风险提示</a>
             </div>
+        </div>
 
-            <div id="alertBox" class="alert-box hidden">
-                <p class="alert-text">⚠️ 该账号已申请过试用码</p>
-                <p class="alert-subtext">
-                    如觉得不错请购买正式码<br>
-                    联系QQ: <span class="alert-contact" onclick="navigator.clipboard.writeText('64743885')">64743885</span> | 
-                    微信: <span class="alert-contact" onclick="navigator.clipboard.writeText('zyzcfc')">zyzcfc</span>
-                </p>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-badge">🔥 限时免费试用</div>
+            <h1>赵财期权末日轮策略</h1>
+            <p>专为期权末日轮行情设计的量化策略，定时重启、无限迭代，助力你在波动市场中把握机会。</p>
+            <div class="hero-motto">
+                <span>🔄 定时重启</span>
+                <span class="dot">·</span>
+                <span>♾️ 无限迭代</span>
+                <span class="dot">·</span>
+                <span>📈 日益增进</span>
             </div>
+            <div class="btn-wrap">
+                <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
+                    🚀 立即申请试用
+                </a>
+                <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank" class="btn-secondary">
+                    📖 使用说明
+                </a>
+            </div>
+        </div>
 
-            <!-- 输入区：UID + 联系方式放一起 -->
-            <div class="input-group">
-                <label class="input-label">战友智大领峰用户名</label>
-                <input type="text" id="uid" placeholder="输入战友智大领峰用户名" class="input-field" maxlength="50">
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">30</div>
+                <div class="stat-label">天免费试用</div>
             </div>
-            <div class="input-group">
-                <label class="input-label" style="color: #ff6b35;">联系方式（QQ / 微信）<span style="color:#ef4444;"> *必填</span></label>
-                <input type="text" id="contact" placeholder="输入你的QQ号或微信号" class="input-field" maxlength="50">
+            <div class="stat-card">
+                <div class="stat-number">24h</div>
+                <div class="stat-label">自动出码</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-number">♾️</div>
+                <div class="stat-label">持续迭代</div>
+            </div>
+        </div>
 
-            <button onclick="go()" class="btn">
-                <span>⚔️</span>
-                <span>申请授权码</span>
-                <span>⚔️</span>
-            </button>
-
-            <div id="result" class="result-section hidden">
-                <div class="code-box">
-                    <div class="code-header">
-                        <span class="code-label">授权码</span>
-                        <button onclick="copyCode()" id="copyBtn" class="copy-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <textarea id="code" class="code-textarea" readonly></textarea>
+        <!-- Features -->
+        <div class="section" id="features">
+            <h2 class="section-title">策略优势</h2>
+            <p class="section-sub">为什么选择赵财末日轮策略</p>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">定时重启</div>
+                    <div class="feature-desc">策略每日自动重启，清除冗余数据，保持最佳运行状态，避免内存堆积导致卡顿。</div>
                 </div>
-                <div class="info-grid">
-                    <div class="info-box">
-                        <div class="info-label">战友智大领峰用户名</div>
-                        <div id="showUid" class="info-value"></div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">授权到期日</div>
-                        <div id="showExpire" class="info-value gold"></div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">联系方式</div>
-                        <div id="showContact" class="info-value"></div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">申请时间</div>
-                        <div id="showTime" class="info-value gold"></div>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">♾️</div>
+                    <div class="feature-title">无限迭代</div>
+                    <div class="feature-desc">基于实盘数据持续优化策略参数，逐日精进，适应不同市场环境的变化。</div>
                 </div>
-                <div class="member-box">
-                    <p id="memberCount" class="member-text"></p>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">日益增进</div>
+                    <div class="feature-desc">每日复盘分析，策略表现数据化，可追溯、可验证，让你看得见进步。</div>
                 </div>
-            </div>
-
-            <!-- 管理员入口 -->
-            <div class="admin-toggle">
-                <button class="btn-small" onclick="toggleAdmin()">📋 管理员查看申请记录</button>
-            </div>
-            <div id="adminPanel" class="admin-panel hidden">
-                <div class="admin-title">
-                    <span>📊 申请记录管理</span>
-                    <span class="badge" id="recordCount">0 条记录</span>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">末日轮专攻</div>
+                    <div class="feature-desc">专注于期权末日轮行情策略，把握到期前的高波动机会，精准狙击。</div>
                 </div>
-                <div class="admin-stats">
-                    <div class="admin-stat">
-                        <div class="admin-stat-num" id="statTotal">0</div>
-                        <div class="admin-stat-label">总申请</div>
-                    </div>
-                    <div class="admin-stat">
-                        <div class="admin-stat-num" id="statToday">0</div>
-                        <div class="admin-stat-label">今日</div>
-                    </div>
-                    <div class="admin-stat">
-                        <div class="admin-stat-num" id="statExpired">0</div>
-                        <div class="admin-stat-label">已过期</div>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">授权码保护</div>
+                    <div class="feature-desc">一机一码，授权码绑定账户，防止滥用，保障策略安全。</div>
                 </div>
-                <div class="admin-actions">
-                    <button class="btn-small" onclick="exportCSV()">📥 导出 CSV</button>
-                    <button class="btn-small" onclick="clearAll()">🗑️ 清空记录</button>
-                </div>
-                <div class="scroll-wrap" id="adminTableWrap">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>UID</th>
-                                <th>联系方式</th>
-                                <th>授权码</th>
-                                <th>到期日</th>
-                                <th>申请时间</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="link-section">
-                <div class="link-item">
-                    <span class="link-icon">💬</span>
-                    <span>QQ群：</span>
-                    <span onclick="navigator.clipboard.writeText('666181683')" style="color: #ff6b35; cursor: pointer;">666181683</span>
-                </div>
-                <div class="link-item">
-                    <span class="link-icon">📖</span>
-                    <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">腾讯文档 · 赵财末日轮主观策略使用说明书</a>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-title">社群交流</div>
+                    <div class="feature-desc">加入QQ群与战友交流心得，互相学习，共同进步。</div>
                 </div>
             </div>
         </div>
+
+        <!-- How it works -->
+        <div class="section" id="how">
+            <h2 class="section-title">三步获取授权码</h2>
+            <p class="section-sub">简单三步，即刻开始使用</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-title">填写信息</div>
+                    <div class="step-desc">提交你的智大领峰账号和联系方式</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-title">自动跳转</div>
+                    <div class="step-desc">提交后自动跳转到授权码生成页面</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-title">生成授权码</div>
+                    <div class="step-desc">输入账户名，一键生成30天试用码</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-title">激活使用</div>
+                    <div class="step-desc">复制授权码，在智大领峰中激活即可使用</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk -->
+        <div class="section" id="risk">
+            <h2 class="section-title">风险提示</h2>
+            <p class="section-sub">投资有风险，入市需谨慎</p>
+            <div class="risk-box">
+                <div class="risk-title">⚠️ 重要声明</div>
+                <ul class="risk-list">
+                    <li>期权交易属于高风险投资，末日轮行情波动极大，可能导致本金全部损失</li>
+                    <li>请务必使用闲余资金参与，切勿借贷投资</li>
+                    <li>本人仅分享策略思路，不提供任何形式的交易指导、喊单或带单服务</li>
+                    <li>本人不会以任何理由主动添加你的微信或QQ</li>
+                    <li>任何冒充赵财名义收费的行为均属诈骗，请直接拉黑举报</li>
+                    <li>提交申请即视为已知晓以上风险，所有交易决策由你自行承担，盈亏自负</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+            <h2>准备好了吗？</h2>
+            <p>免费试用30天，体验赵财期权末日轮策略</p>
+            <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
+                🚀 立即申请试用
+            </a>
+            <div style="margin-top: 16px; font-size: 13px; color: #6b7280;">
+                QQ群：<span onclick="copyQQ()" style="color:#ff6b35;cursor:pointer;">666181683</span>
+                &nbsp;|&nbsp; 遇到问题群里交流
+            </div>
+        </div>
+
+        <!-- Footer -->
         <div class="footer">
-            <span>💪</span>
-            <span>末日边缘 搞钱联盟</span>
-            <span>🕶️</span>
+            <p>赵财期权末日轮策略 &copy; 2026 &nbsp;|&nbsp; <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">使用说明书</a> &nbsp;|&nbsp; QQ群: 666181683</p>
+        </div>
+    </div>
+
+    <!-- 申请弹窗 -->
+    <div id="applyModal" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-icon">📝</div>
+            <div class="modal-title">申请试用授权码</div>
+            <div class="modal-desc">
+                请先填写收集表提交你的账号信息，<br>
+                提交后会自动跳转到授权码生成页面 🚀
+            </div>
+            <a href="https://docs.qq.com/form/page/DQ2psbmhDcUpmYWta#/fill-detail" target="_blank" class="modal-link" onclick="closeModal(event)">
+                📋 去填写收集表
+            </a>
+            <br>
+            <button class="modal-close" onclick="closeModal()">稍后再说</button>
         </div>
     </div>
 
     <script>
-        const CoreSecret = 8801088;
-        const mapTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-        const TRIAL_DAYS = 30;
-        const SUBMISSIONS_KEY = 'zhaocai_submissions';
-        const USED_ACCOUNTS_KEY = 'zhaocai_used_accounts';
-
-        function formatDate(date) {
-            return date.getFullYear() + '-' + 
-                String(date.getMonth() + 1).padStart(2, '0') + '-' + 
-                String(date.getDate()).padStart(2, '0');
+        function showApplyModal() {
+            document.getElementById('applyModal').classList.remove('hidden');
         }
-
-        function getExpireNum(date) {
-            return parseInt(date.getFullYear() + 
-                String(date.getMonth() + 1).padStart(2, '0') + 
-                String(date.getDate()).padStart(2, '0'));
-        }
-
-        function getUsedAccounts() {
-            return JSON.parse(localStorage.getItem(USED_ACCOUNTS_KEY) || '[]');
-        }
-
-        function isAccountUsed(uid) {
-            let submissions = getSubmissions();
-            return submissions.some(s => s.uid === uid);
-        }
-
-        function calculateSerial(uid, expireNum) {
-            let uidSum = 0;
-            for (let i = 1; i < uid.length; i++) {
-                let c = uid[i];
-                let v = mapTable.indexOf(c) + 1;
-                uidSum += v;
-            }
-            uidSum += 1;
-            let salt = uidSum * 10000 + CoreSecret;
-            let v1 = expireNum * 3 + CoreSecret + salt;
-            let v2 = expireNum + salt + CoreSecret + 99999;
-            let serial = "1" + v1 + CoreSecret + v2;
-            return { serial, uidSum };
-        }
-
-        function getSubmissions() {
-            return JSON.parse(localStorage.getItem(SUBMISSIONS_KEY) || '[]');
-        }
-
-        function saveSubmission(sub) {
-            let subs = getSubmissions();
-            subs.push(sub);
-            localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(subs));
-        }
-
-        function go() {
-            let uid = document.getElementById("uid").value.toUpperCase().trim();
-            let contact = document.getElementById("contact").value.trim();
-            let uidField = document.getElementById("uid");
-            let contactField = document.getElementById("contact");
-            let alertBox = document.getElementById("alertBox");
-
-            if (!uid) {
-                uidField.classList.add("shake");
-                setTimeout(() => uidField.classList.remove("shake"), 500);
-                return;
-            }
-            
-            if (!contact) {
-                contactField.classList.add("shake");
-                setTimeout(() => contactField.classList.remove("shake"), 500);
-                return;
-            }
-
-            if (isAccountUsed(uid)) {
-                alertBox.classList.remove("hidden");
-                inputField.classList.add("shake");
-                setTimeout(() => inputField.classList.remove("shake"), 500);
-                document.getElementById("result").classList.add("hidden");
-                return;
-            }
-            alertBox.classList.add("hidden");
-
-            let now = new Date();
-            let expireDate = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
-            let expireNum = getExpireNum(expireDate);
-            let expireStr = formatDate(expireDate);
-            let timeStr = formatDate(now) + ' ' + 
-                String(now.getHours()).padStart(2, '0') + ':' + 
-                String(now.getMinutes()).padStart(2, '0');
-
-            let result = calculateSerial(uid, expireNum);
-
-            // 保存记录
-            let submission = {
-                uid: uid,
-                contact: contact || '未填写',
-                code: result.serial,
-                expireDate: expireStr,
-                time: timeStr,
-                timestamp: Date.now()
-            };
-            saveSubmission(submission);
-
-            // 显示结果
-            document.getElementById("code").value = result.serial;
-            document.getElementById("showUid").innerText = uid;
-            document.getElementById("showExpire").innerText = expireStr;
-            document.getElementById("showContact").innerText = contact || '未填写';
-            document.getElementById("showTime").innerText = timeStr;
-
-            let userNum = (result.uidSum % 100) + 101;
-            document.getElementById("memberCount").innerText = '💪 你是第 ' + userNum + ' 位战友，你并不孤单！ 🕶️';
-
-            document.getElementById("result").classList.remove("hidden");
-
-            // 刷新管理员面板
-            if (!document.getElementById("adminPanel").classList.contains("hidden")) {
-                renderAdminPanel();
+        function closeModal(e) {
+            if (!e || e.target === e.currentTarget || e.type === 'click') {
+                document.getElementById('applyModal').classList.add('hidden');
             }
         }
-
-        function copyCode() {
-            let code = document.getElementById("code").value;
-            let btn = document.getElementById("copyBtn");
-            navigator.clipboard.writeText(code).then(() => {
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                }, 2000);
-            });
+        function copyQQ() {
+            navigator.clipboard.writeText("666181683");
         }
 
-        // 管理员面板
-        function toggleAdmin() {
-            let panel = document.getElementById("adminPanel");
-            panel.classList.toggle("hidden");
-            if (!panel.classList.contains("hidden")) {
-                renderAdminPanel();
-            }
-        }
-
-        function renderAdminPanel() {
-            let subs = getSubmissions();
-            let tbody = document.getElementById("adminTableBody");
-            let today = formatDate(new Date());
-            
-            document.getElementById("recordCount").innerText = subs.length + ' 条记录';
-            document.getElementById("statTotal").innerText = subs.length;
-            document.getElementById("statToday").innerText = subs.filter(s => s.time.startsWith(today)).length;
-            document.getElementById("statExpired").innerText = subs.filter(s => s.expireDate < today).length;
-
-            if (subs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#6b7280;padding:24px;">暂无申请记录</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = subs.map((s, i) => `
-                <tr>
-                    <td>${i + 1}</td>
-                    <td>${s.uid}</td>
-                    <td>${s.contact}</td>
-                    <td style="font-family:monospace;font-size:11px;color:#ffd700;">${s.code}</td>
-                    <td>${s.expireDate}</td>
-                    <td>${s.time}</td>
-                </tr>
-            `).reverse().join('');
-        }
-
-        function exportCSV() {
-            let subs = getSubmissions();
-            if (subs.length === 0) return alert('暂无记录可导出');
-            
-            let csv = '序号,UID,联系方式,授权码,到期日,申请时间\n';
-            subs.forEach((s, i) => {
-                csv += `${i + 1},${s.uid},${s.contact},${s.code},${s.expireDate},${s.time}\n`;
-            });
-            
-            let blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-            let a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = '授权码申请记录_' + formatDate(new Date()) + '.csv';
-            a.click();
-            URL.revokeObjectURL(blob);
-        }
-
-        function clearAll() {
-            if (confirm('确定要清空所有申请记录吗？此操作不可撤销！')) {
-                localStorage.removeItem(SUBMISSIONS_KEY);
-                localStorage.removeItem(USED_ACCOUNTS_KEY);
-                renderAdminPanel();
-            }
-        }
+        // ESC关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
     </script>
+
 </body>
 </html>
