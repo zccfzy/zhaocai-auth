@@ -743,10 +743,11 @@
             });
         }
 
-        function go() {
+        async function go() {
             let uid = document.getElementById("uid").value.toUpperCase().trim();
             let inputField = document.getElementById("uid");
             let alertBox = document.getElementById("alertBox");
+            let btn = document.querySelector('.btn');
             
             if (!uid) {
                 inputField.classList.add("shake");
@@ -754,38 +755,68 @@
                 return;
             }
             
-            if (isAccountUsed(uid)) {
-                alertBox.classList.remove("hidden");
-                inputField.classList.add("shake");
-                setTimeout(() => inputField.classList.remove("shake"), 500);
-                document.getElementById("result").classList.add("hidden");
+            btn.disabled = true;
+            btn.innerHTML = '<span>⚔️</span><span>处理中...</span><span>⚔️</span>';
+            
+            try {
+                let response = await fetch(`https://1328173883-dz4q4z8i5a.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`);
+                let data = await response.json();
+                
+                if (data.success) {
+                    alertBox.classList.add("hidden");
+                    
+                    saveUsedAccount(uid);
+                    saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
+                    
+                    document.getElementById("code").value = data.data.code;
+                    document.getElementById("showUid").innerText = uid;
+                    document.getElementById("showExpire").innerText = data.data.expire;
+                    document.getElementById("memberCount").innerText = '💪 你是第 ' + data.data.userNum + ' 位战友，你并不孤单！ 🕶️';
+                    document.getElementById("result").classList.remove("hidden");
+                } else {
+                    alertBox.classList.remove("hidden");
+                    document.getElementById("result").classList.add("hidden");
+                    
+                    if (data.hasHistory && data.data) {
+                        saveUsedAccount(uid);
+                        saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
+                    }
+                }
                 
                 showHistory(uid);
-                return;
+            } catch (error) {
+                console.error('API请求失败:', error);
+                
+                if (isAccountUsed(uid)) {
+                    alertBox.classList.remove("hidden");
+                    document.getElementById("result").classList.add("hidden");
+                    showHistory(uid);
+                } else {
+                    let now = new Date();
+                    let expireDate = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
+                    let expireNum = getExpireNum(expireDate);
+                    let expireStr = formatDate(expireDate);
+                    
+                    let result = calculateSerial(uid, expireNum);
+                    
+                    saveUsedAccount(uid);
+                    saveAccountCode(uid, result.serial, result.uidSum, expireStr, expireNum);
+                    
+                    document.getElementById("code").value = result.serial;
+                    document.getElementById("showUid").innerText = uid;
+                    document.getElementById("showExpire").innerText = expireStr;
+                    
+                    let userNum = (result.uidSum % 100) + 101;
+                    document.getElementById("memberCount").innerText = '💪 你是第 ' + userNum + ' 位战友，你并不孤单！ 🕶️';
+                    
+                    document.getElementById("result").classList.remove("hidden");
+                    alertBox.classList.add("hidden");
+                    showHistory(uid);
+                }
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>⚔️</span><span>申请授权码</span><span>⚔️</span>';
             }
-            
-            alertBox.classList.add("hidden");
-            
-            let now = new Date();
-            let expireDate = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
-            let expireNum = getExpireNum(expireDate);
-            let expireStr = formatDate(expireDate);
-            
-            let result = calculateSerial(uid, expireNum);
-            
-            saveUsedAccount(uid);
-            saveAccountCode(uid, result.serial, result.uidSum, expireStr, expireNum);
-            
-            document.getElementById("code").value = result.serial;
-            document.getElementById("showUid").innerText = uid;
-            document.getElementById("showExpire").innerText = expireStr;
-            
-            let userNum = (result.uidSum % 100) + 101;
-            document.getElementById("memberCount").innerText = '💪 你是第 ' + userNum + ' 位战友，你并不孤单！ 🕶️';
-            
-            document.getElementById("result").classList.remove("hidden");
-            
-            showHistory(uid);
         }
 
         function copyCode() {
