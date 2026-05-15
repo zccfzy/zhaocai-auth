@@ -189,7 +189,7 @@
                 <input type="text" id="uid" placeholder="输入战友智大领峰用户名" class="input-field" maxlength="50">
             </div>
             <div class="input-group">
-                <label class="input-label">联系方式（QQ / 微信）</label>
+                <label class="input-label" style="color: #ff6b35;">联系方式（QQ / 微信）<span style="color:#ef4444;"> *必填</span></label>
                 <input type="text" id="contact" placeholder="输入你的QQ号或微信号" class="input-field" maxlength="50">
             </div>
 
@@ -354,12 +354,19 @@
         function go() {
             let uid = document.getElementById("uid").value.toUpperCase().trim();
             let contact = document.getElementById("contact").value.trim();
-            let inputField = document.getElementById("uid");
+            let uidField = document.getElementById("uid");
+            let contactField = document.getElementById("contact");
             let alertBox = document.getElementById("alertBox");
 
             if (!uid) {
-                inputField.classList.add("shake");
-                setTimeout(() => inputField.classList.remove("shake"), 500);
+                uidField.classList.add("shake");
+                setTimeout(() => uidField.classList.remove("shake"), 500);
+                return;
+            }
+            
+            if (!contact) {
+                contactField.classList.add("shake");
+                setTimeout(() => contactField.classList.remove("shake"), 500);
                 return;
             }
 
