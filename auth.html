@@ -476,111 +476,6 @@
             align-items: center;
             justify-content: center;
         }
-
-        /* 管理后台按钮 */
-        .admin-btn {
-            background: rgba(255, 107, 53, 0.15);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 10px;
-            padding: 10px 20px;
-            color: #ff6b35;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .admin-btn:hover {
-            background: rgba(255, 107, 53, 0.25);
-            border-color: #ff6b35;
-        }
-
-        /* 弹窗遮罩 */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .modal-content {
-            background: #1a0a0a;
-            border: 1px solid rgba(255,107,53,0.3);
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 0 40px rgba(255,107,53,0.2);
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-        .admin-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .admin-action-btn {
-            background: rgba(255,107,53,0.2);
-            border: 1px solid rgba(255,107,53,0.4);
-            border-radius: 8px;
-            padding: 8px 14px;
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .admin-action-btn:hover {
-            background: rgba(255,107,53,0.35);
-        }
-        .admin-action-btn.danger {
-            background: rgba(220,38,38,0.2);
-            border-color: rgba(220,38,38,0.4);
-            color: #ef4444;
-        }
-        .admin-action-btn.danger:hover {
-            background: rgba(220,38,38,0.35);
-        }
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-        .admin-table th {
-            background: rgba(255,107,53,0.1);
-            color: #ff6b35;
-            padding: 10px 8px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,107,53,0.2);
-            white-space: nowrap;
-        }
-        .admin-table td {
-            padding: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: #d1d5db;
-            word-break: break-all;
-        }
-        .admin-table tr:hover td {
-            background: rgba(255,107,53,0.05);
-        }
-        .admin-table .code-cell {
-            font-family: 'Courier New', monospace;
-            color: #ffd700;
-            font-size: 11px;
-        }
     </style>
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" oncopy="return false;" oncut="return false;">
@@ -672,17 +567,6 @@
                 >
             </div>
 
-            <div class="input-group">
-                <label class="input-label">QQ / 微信号 <span style="color:#ff6b35;">（必填其一）</span></label>
-                <input 
-                    type="text" 
-                    id="contact" 
-                    placeholder="请输入QQ或微信号"
-                    class="input-field"
-                    maxlength="50"
-                >
-            </div>
-
             <button onclick="go()" class="btn">
                 <span>⚔️</span>
                 <span>申请授权码</span>
@@ -732,52 +616,10 @@
             </div>
         </div>
 
-        <div style="text-align:center;margin-top:12px;">
-            <button onclick="openAdmin()" class="admin-btn">📋 管理后台</button>
-        </div>
-
         <div class="footer">
             <span>💪</span>
             <span>末日边缘 搞钱联盟</span>
             <span>🕶️</span>
-        </div>
-    </div>
-
-    <!-- 管理后台弹窗 -->
-    <div id="adminModal" class="modal-overlay hidden" onclick="closeAdmin(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <span style="display:flex;align-items:center;gap:8px;"><span>📋</span> 申请记录管理后台</span>
-                <span onclick="closeAdmin()" style="cursor:pointer;font-size:20px;color:#6b7280;">✕</span>
-            </div>
-            <div id="adminAlert" class="hidden" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin-bottom:12px;text-align:center;color:#22c55e;font-size:13px;"></div>
-            <div class="admin-toolbar">
-                <span id="recordCount" style="color:#9ca3af;font-size:13px;">共 0 条记录</span>
-                <div style="display:flex;gap:8px;">
-                    <button onclick="exportCSV()" class="admin-action-btn">📥 导出 CSV</button>
-                    <button onclick="clearAllRecords()" class="admin-action-btn danger">🗑️ 清空全部</button>
-                </div>
-            </div>
-            <div style="overflow-x:auto;">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>用户名</th>
-                            <th>QQ/微信号</th>
-                            <th>授权码</th>
-                            <th>到期日</th>
-                            <th>申请时间</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminTableBody">
-                        <tr><td colspan="6" style="text-align:center;color:#6b7280;padding:30px;">暂无记录</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="text-align:right;margin-top:12px;">
-                <button onclick="closeAdmin()" style="background:rgba(255,255,255,0.1);border:none;border-radius:8px;padding:10px 20px;color:#fff;cursor:pointer;">关闭</button>
-            </div>
         </div>
     </div>
 
@@ -824,9 +666,9 @@
             return data;
         }
 
-        function saveAccountCode(uid, code, uidSum, expireDate, expireNum, contact) {
+        function saveAccountCode(uid, code, uidSum, expireDate, expireNum) {
             let accountCodes = getAccountCodes();
-            accountCodes[uid] = { code: code, uidSum: uidSum, time: Date.now(), expireDate: expireDate, expireNum: expireNum, contact: contact || '' };
+            accountCodes[uid] = { code: code, uidSum: uidSum, time: Date.now(), expireDate: expireDate, expireNum: expireNum };
             localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
         }
 
@@ -903,21 +745,13 @@
 
         async function go() {
             let uid = document.getElementById("uid").value.toUpperCase().trim();
-            let contact = document.getElementById("contact").value.trim();
             let inputField = document.getElementById("uid");
-            let contactField = document.getElementById("contact");
             let alertBox = document.getElementById("alertBox");
             let btn = document.querySelector('.btn');
             
             if (!uid) {
                 inputField.classList.add("shake");
                 setTimeout(() => inputField.classList.remove("shake"), 500);
-                return;
-            }
-            
-            if (!contact) {
-                contactField.classList.add("shake");
-                setTimeout(() => contactField.classList.remove("shake"), 500);
                 return;
             }
             
@@ -932,7 +766,7 @@
                     alertBox.classList.add("hidden");
                     
                     saveUsedAccount(uid);
-                    saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)), contact);
+                    saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
                     
                     document.getElementById("code").value = data.data.code;
                     document.getElementById("showUid").innerText = uid;
@@ -945,7 +779,7 @@
                     
                     if (data.hasHistory && data.data) {
                         saveUsedAccount(uid);
-                        saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)), contact);
+                        saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
                     }
                 }
                 
@@ -966,7 +800,7 @@
                     let result = calculateSerial(uid, expireNum);
                     
                     saveUsedAccount(uid);
-                    saveAccountCode(uid, result.serial, result.uidSum, expireStr, expireNum, contact);
+                    saveAccountCode(uid, result.serial, result.uidSum, expireStr, expireNum);
                     
                     document.getElementById("code").value = result.serial;
                     document.getElementById("showUid").innerText = uid;
@@ -1009,113 +843,6 @@
 
         function copyWeChat() {
             navigator.clipboard.writeText("zyzcfc");
-        }
-
-        /* ===== 管理后台 ===== */
-        function openAdmin() {
-            renderAdminTable();
-            document.getElementById('adminModal').classList.remove('hidden');
-        }
-
-        function closeAdmin(e) {
-            if (!e || e.target === e.currentTarget) {
-                document.getElementById('adminModal').classList.add('hidden');
-            }
-        }
-
-        function renderAdminTable() {
-            let data = getAccountCodes();
-            let tbody = document.getElementById('adminTableBody');
-            let countEl = document.getElementById('recordCount');
-            let entries = Object.entries(data);
-
-            countEl.innerText = '共 ' + entries.length + ' 条记录';
-
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#6b7280;padding:30px;">暂无记录</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = entries.map(([uid, record], i) => {
-                let timeStr = '未知';
-                if (record.time) {
-                    let d = new Date(record.time);
-                    timeStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-                }
-                return '<tr>' +
-                    '<td>' + (i + 1) + '</td>' +
-                    '<td>' + uid + '</td>' +
-                    '<td>' + (record.contact || '-') + '</td>' +
-                    '<td class="code-cell">' + record.code + '</td>' +
-                    '<td>' + (record.expireDate || '-') + '</td>' +
-                    '<td>' + timeStr + '</td>' +
-                    '</tr>';
-            }).join('');
-        }
-
-        function exportCSV() {
-            let data = getAccountCodes();
-            let entries = Object.entries(data);
-
-            if (entries.length === 0) {
-                let alertEl = document.getElementById('adminAlert');
-                alertEl.innerText = '⚠️ 暂无记录可导出';
-                alertEl.className = '';
-                alertEl.style.display = 'block';
-                alertEl.style.background = 'rgba(255,107,53,0.15)';
-                alertEl.style.borderColor = 'rgba(255,107,53,0.3)';
-                alertEl.style.color = '#ff6b35';
-                setTimeout(() => alertEl.style.display = 'none', 3000);
-                return;
-            }
-
-            // BOM for Excel Chinese support
-            let bom = '\uFEFF';
-            let csv = bom + '序号,用户名,QQ/微信号,授权码,到期日,申请时间\n';
-
-            entries.forEach(([uid, record], i) => {
-                let timeStr = '';
-                if (record.time) {
-                    let d = new Date(record.time);
-                    timeStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-                }
-                let contact = (record.contact || '').replace(/,/g, '，');
-                let code = record.code.replace(/,/g, '，');
-                csv += (i + 1) + ',' + uid + ',' + contact + ',' + code + ',' + (record.expireDate || '') + ',' + timeStr + '\n';
-            });
-
-            let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            let link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = '授权码申请记录_' + new Date().toISOString().slice(0,10) + '.csv';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-
-            let alertEl = document.getElementById('adminAlert');
-            alertEl.innerText = '✅ 已导出 ' + entries.length + ' 条记录';
-            alertEl.className = '';
-            alertEl.style.display = 'block';
-            alertEl.style.background = 'rgba(34,197,94,0.15)';
-            alertEl.style.borderColor = 'rgba(34,197,94,0.3)';
-            alertEl.style.color = '#22c55e';
-            setTimeout(() => alertEl.style.display = 'none', 3000);
-        }
-
-        function clearAllRecords() {
-            if (!confirm('⚠️ 确定清空所有申请记录吗？此操作不可恢复！')) return;
-            localStorage.removeItem(USED_ACCOUNTS_KEY);
-            localStorage.removeItem(ACCOUNT_CODES_KEY);
-            renderAdminTable();
-            let alertEl = document.getElementById('adminAlert');
-            alertEl.innerText = '✅ 已清空所有记录';
-            alertEl.className = '';
-            alertEl.style.display = 'block';
-            alertEl.style.background = 'rgba(34,197,94,0.15)';
-            alertEl.style.borderColor = 'rgba(34,197,94,0.3)';
-            alertEl.style.color = '#22c55e';
-            setTimeout(() => alertEl.style.display = 'none', 3000);
         }
     </script>
 </body>
