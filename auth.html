@@ -649,8 +649,21 @@
         }
 
         function getAccountCodes() {
-            let data = localStorage.getItem(ACCOUNT_CODES_KEY);
-            return data ? JSON.parse(data) : {};
+            let data = JSON.parse(localStorage.getItem(ACCOUNT_CODES_KEY) || '{}');
+            let needSave = false;
+            Object.keys(data).forEach(uid => {
+                if (data[uid].code && (data[uid].code.startsWith('9') || !data[uid].expireDate)) {
+                    delete data[uid];
+                    needSave = true;
+                }
+            });
+            if (needSave) {
+                localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(data));
+                let usedAccounts = getUsedAccounts();
+                usedAccounts = usedAccounts.filter(uid => data[uid]);
+                localStorage.setItem(USED_ACCOUNTS_KEY, JSON.stringify(usedAccounts));
+            }
+            return data;
         }
 
         function getAccountCode(uid) {
