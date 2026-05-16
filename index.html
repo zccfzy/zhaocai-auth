@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>赵财期权末日轮策略</title>
+    <title>赵财期权 · 末日轮情景分析</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -274,6 +274,38 @@
             .features { grid-template-columns: 1fr; }
             .stats { grid-template-columns: 1fr; }
             .hero h1 { font-size: 28px; }
+            .hero p { font-size: 15px; padding: 0 10px; }
+            .hero { padding: 30px 0 20px; }
+            .hero-motto { flex-wrap: wrap; gap: 8px; font-size: 12px; }
+            .btn-primary { padding: 16px 24px; font-size: 16px; width: 100%; }
+            .btn-secondary { margin-left: 0; width: 100%; text-align: center; }
+            .btn-wrap { flex-direction: column; gap: 10px; }
+            .nav-links { gap: 12px; font-size: 12px; }
+            .nav { margin-bottom: 20px; }
+            .container { padding: 12px; }
+            .section { padding: 30px 0; }
+            .section-title { font-size: 22px; }
+            .stat-number { font-size: 22px; }
+            .stat-card { padding: 14px; }
+            .feature-card { padding: 20px; }
+            .risk-box { padding: 20px; }
+            .modal-box { padding: 24px 16px; }
+            .modal-title { font-size: 18px; }
+            .modal-link { width: 100%; text-align: center; padding: 14px 20px; }
+            .step { padding: 16px 12px; }
+            .cta { padding: 30px 0; }
+            .cta h2 { font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 22px; }
+            .hero-badge { font-size: 11px; padding: 4px 12px; }
+            .step-title { font-size: 12px; }
+            .step-desc { font-size: 11px; }
+            .feature-icon { font-size: 26px; }
+            .feature-title { font-size: 14px; }
+            .feature-desc { font-size: 12px; }
+            .steps { gap: 10px; }
+            .features { gap: 12px; }
         }
         .feature-card {
             background: rgba(255, 255, 255, 0.03);
@@ -379,6 +411,104 @@
         }
         .risk-list li::before {
             content: "⚠️ ";
+        }
+
+        /* ===== Pricing ===== */
+        .pricing {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .pricing-compare {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .pricing-compare-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+        .pricing-compare .price-high {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ef4444;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444;
+        }
+        .pricing-compare .arrow-down {
+            font-size: 28px;
+            color: #ff6b35;
+            margin: 8px 0;
+        }
+        .pricing-compare .price-low {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-compare .price-label {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+        .pricing-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px 24px;
+        }
+        .pricing-row-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+        .pricing-row-name {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .pricing-row-original {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .pricing-row-original s {
+            color: #6b7280;
+        }
+        .pricing-row-price {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-row-badge {
+            font-size: 11px;
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        .pricing-note {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 16px;
+            line-height: 1.6;
         }
 
         /* ===== CTA ===== */
@@ -491,9 +621,10 @@
     <div class="container">
         <!-- Nav -->
         <div class="nav">
-            <div class="nav-logo">⚔️ 赵财策略</div>
+            <div class="nav-logo">⚔️ 赵财 · 末日轮情景分析</div>
             <div class="nav-links">
-                <a href="#features">策略优势</a>
+                <a href="#features">情景分析</a>
+                <a href="#pricing">定价</a>
                 <a href="#how">使用流程</a>
                 <a href="#risk">风险提示</a>
             </div>
@@ -502,14 +633,12 @@
         <!-- Hero -->
         <div class="hero">
             <div class="hero-badge">🔥 限时免费试用</div>
-            <h1>赵财期权末日轮策略</h1>
-            <p>专为期权末日轮行情设计的量化策略，定时重启、无限迭代，助力你在波动市场中把握机会。</p>
+            <h1>赵财期权 · 末日轮情景分析</h1>
+            <p>手动调参 · 实时推演 · 多变量叠加<br>对标Wind/Bloomberg · 面向个人交易者</p>
             <div class="hero-motto">
-                <span>🔄 定时重启</span>
+                <span>像明日边缘一样，每次迭代都更强</span>
                 <span class="dot">·</span>
-                <span>♾️ 无限迭代</span>
-                <span class="dot">·</span>
-                <span>📈 日益增进</span>
+                <span>从菜鸟到战神，战友陪你一起</span>
             </div>
             <div class="btn-wrap">
                 <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
@@ -528,8 +657,8 @@
                 <div class="stat-label">天免费试用</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">24h</div>
-                <div class="stat-label">自动出码</div>
+                <div class="stat-number">🔥</div>
+                <div class="stat-label">功能强大</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">♾️</div>
@@ -540,37 +669,37 @@
         <!-- Features -->
         <div class="section" id="features">
             <h2 class="section-title">策略优势</h2>
-            <p class="section-sub">为什么选择赵财末日轮策略</p>
+            <p class="section-sub">手动调参 · 实时推演 · 多变量叠加</p>
             <div class="features">
                 <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <div class="feature-title">定时重启</div>
-                    <div class="feature-desc">策略每日自动重启，清除冗余数据，保持最佳运行状态，避免内存堆积导致卡顿。</div>
+                    <div class="feature-icon">🎛️</div>
+                    <div class="feature-title">手动调参</div>
+                    <div class="feature-desc">标的价格、隐含波动率、剩余天数，全可手动输入，自由组合推演。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">♾️</div>
-                    <div class="feature-title">无限迭代</div>
-                    <div class="feature-desc">基于实盘数据持续优化策略参数，逐日精进，适应不同市场环境的变化。</div>
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">实时推演</div>
+                    <div class="feature-desc">参数一改，理论价格、希腊字母、风险指标即时刷新，所见即所得。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <div class="feature-title">日益增进</div>
-                    <div class="feature-desc">每日复盘分析，策略表现数据化，可追溯、可验证，让你看得见进步。</div>
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">自动选合约</div>
+                    <div class="feature-desc">任意到期日 × 任意实值/虚值/平值品种，一键匹配最优合约。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">三维一体看盘</div>
+                    <div class="feature-desc">标的价格/期权价格/隐含波动率，三者归一百分位0-100坐标，一眼看清背离机会。</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <div class="feature-title">末日轮专攻</div>
-                    <div class="feature-desc">专注于期权末日轮行情策略，把握到期前的高波动机会，精准狙击。</div>
+                    <div class="feature-title">末日轮进化</div>
+                    <div class="feature-desc">像明日边缘电影主人公一样，每次循环都比上次更强。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <div class="feature-title">授权码保护</div>
-                    <div class="feature-desc">一机一码，授权码绑定账户，防止滥用，保障策略安全。</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <div class="feature-title">社群交流</div>
-                    <div class="feature-desc">加入QQ群与战友交流心得，互相学习，共同进步。</div>
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-title">战友同行</div>
+                    <div class="feature-desc">QQ群老鸟带路，互相复盘，一起迭代升级。</div>
                 </div>
             </div>
         </div>
@@ -623,10 +752,60 @@
             </div>
         </div>
 
+        <!-- Soul Quote -->
+        <div class="section" style="text-align:center; max-width: 700px; margin: 0 auto; padding: 20px 0 0;">
+            <p style="font-size:15px; color:#6b7280; line-height:1.8; font-style:italic; border-left:3px solid rgba(255,107,53,0.3); padding-left:24px;">
+                像明日边缘里的凯奇一样，我们都在末日轮里定时重启。<br>
+                但每一次重启，都离胜利更近一步。<br>
+                战友在侧，策略在手，干就完了。
+            </p>
+        </div>
+
+        <!-- Pricing -->
+        <div class="section" id="pricing">
+            <h2 class="section-title">定价</h2>
+            <p class="section-sub">对标Wind/Bloomberg · 面向个人交易者</p>
+            <div class="pricing">
+                <div class="pricing-compare">
+                    <div class="pricing-compare-label">机构级终端</div>
+                    <div class="price-high">Wind / Bloomberg · 年费数万+</div>
+                    <div class="arrow-down">👇</div>
+                    <div class="price-low">免费试用30天</div>
+                    <div class="price-label">体验全部功能，不满意不付费</div>
+                </div>
+                <div class="pricing-rows">
+                    <div class="pricing-row">
+                        <div class="pricing-row-left">
+                            <div class="pricing-row-name">📅 月度</div>
+                            <div class="pricing-row-original">原价 <s>￥189</s></div>
+                        </div>
+                        <div>
+                            <span class="pricing-row-price">￥89</span>
+                            <span class="pricing-row-badge">🔥 限时</span>
+                        </div>
+                    </div>
+                    <div class="pricing-row">
+                        <div class="pricing-row-left">
+                            <div class="pricing-row-name">📆 年度</div>
+                            <div class="pricing-row-original">原价 <s>￥1999</s> · 日均≈￥2.7</div>
+                        </div>
+                        <div>
+                            <span class="pricing-row-price">￥999</span>
+                            <span class="pricing-row-badge">🔥 限时</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-note">
+                    💡 对一个20万+账户的活跃交易者，一次因忽视波动率风险的意外亏损可能达数千元。<br>
+                    每天一杯咖啡的钱，给自己多一份决策底气。
+                </div>
+            </div>
+        </div>
+
         <!-- CTA -->
         <div class="cta">
             <h2>准备好了吗？</h2>
-            <p>免费试用30天，体验赵财期权末日轮策略</p>
+            <p>免费试用30天，体验赵财期权情景分析系统</p>
             <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
                 🚀 立即申请试用
             </a>
@@ -638,7 +817,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>赵财期权末日轮策略 &copy; 2026 &nbsp;|&nbsp; <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">使用说明书</a> &nbsp;|&nbsp; QQ群: 666181683</p>
+            <p>赵财期权 · 末日轮情景分析 &copy; 2026 &nbsp;|&nbsp; <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">使用说明书</a> &nbsp;|&nbsp; QQ群: 666181683</p>
         </div>
     </div>
 
@@ -651,7 +830,7 @@
                 请先填写收集表提交你的账号信息，<br>
                 提交后会自动跳转到授权码生成页面 🚀
             </div>
-            <a href="https://docs.qq.com/form/page/DQ2FhWE1IanV1RVFu#/fill-detail" target="_blank" class="modal-link" onclick="closeModal(event)">
+            <a href="https://docs.qq.com/form/page/DQ2psbmhDcUpmYWta#/fill-detail" target="_blank" class="modal-link" onclick="closeModal(event)">
                 📋 去填写收集表
             </a>
             <br>
