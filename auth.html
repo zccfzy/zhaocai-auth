@@ -181,6 +181,17 @@
             font-size: 12px;
             color: #ff6b35;
         }
+        .live-clock { text-align: center; padding: 8px 0; border-top: 1px solid rgba(75,85,99,.2); border-bottom: 1px solid rgba(75,85,99,.2); margin-bottom: 16px; margin-top: 12px; }
+        .clock-time { font-size: 22px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 2px; }
+        .clock-label { font-size: 11px; color: #6b7280; margin-left: 6px; }
+        .date-line { text-align: center; padding: 8px 0; margin-bottom: 8px; }
+        .date-label { font-size: 12px; color: #6b7280; }
+        .date-value { font-size: 14px; color: #f59e0b; font-weight: bold; font-family: 'Courier New', monospace; margin-left: 6px; letter-spacing: 1px; }
+        .countdown-box { text-align: center; padding: 8px; margin-bottom: 12px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); border-radius: 8px; }
+        .countdown-label { font-size: 11px; color: #6b7280; }
+        .countdown-value { font-size: 15px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 1px; }
+        .spin-wrench { display: inline-block; animation: wrench-spin 2s ease-in-out infinite; }
+        @keyframes wrench-spin { 0%,100%{transform:rotate(0deg)}20%{transform:rotate(25deg)}40%{transform:rotate(-15deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-5deg)} }
         .input-group {
             margin-bottom: 24px;
         }
@@ -227,10 +238,22 @@
             gap: 8px;
             box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
             transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .btn > * {
+            pointer-events: none;
         }
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
         .result-section {
             margin-top: 24px;
@@ -479,27 +502,7 @@
     </style>
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" oncopy="return false;" oncut="return false;">
-    <script>
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                var target = e.target || e.srcElement;
-                var isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
-                if (!isInput) {
-                    switch(e.key.toLowerCase()) {
-                        case 'c': case 's': case 'v': case 'x': case 'u': case 'i':
-                            e.preventDefault();
-                            break;
-                    }
-                }
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-            }
-        });
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-        });
-    </script>
+    
     
     <div class="fire-glow"></div>
     <div class="fire-glow"></div>
@@ -534,6 +537,11 @@
                     <span>无限迭代</span>
                     <span>·</span>
                     <span>日益增进</span>
+                    <span class="spin-wrench">🔧</span>
+                </div>
+                <div class="live-clock">
+                    <span id="clockTime" class="clock-time">--:--:--</span>
+                    <span class="clock-label">北京时间</span>
                 </div>
             </div>
 
@@ -544,16 +552,6 @@
                     联系QQ: <span class="alert-contact" onclick="copyQQ2()">64743885</span> | 
                     微信: <span class="alert-contact" onclick="copyWeChat()">zyzcfc</span>
                 </p>
-            </div>
-
-            <div id="historyBox" class="history-box hidden">
-                <div class="history-title">
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span>📋</span>
-                        <span>历史申请记录</span>
-                    </span>
-                </div>
-                <div id="historyList" class="history-list"></div>
             </div>
 
             <div class="input-group">
@@ -567,7 +565,7 @@
                 >
             </div>
 
-            <button onclick="go()" class="btn">
+            <button id="mainBtn" class="btn" onclick="go()">
                 <span>⚔️</span>
                 <span>申请授权码</span>
                 <span>⚔️</span>
@@ -577,7 +575,7 @@
                 <div class="code-box">
                     <div class="code-header">
                         <span class="code-label">授权码</span>
-                        <button onclick="copyCode()" id="copyBtn" class="copy-btn">
+                        <button id="copyBtn" class="copy-btn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -601,6 +599,16 @@
                 <div class="member-box">
                     <p id="memberCount" class="member-text"></p>
                 </div>
+
+                <div id="dateLine" class="date-line hidden">
+                    <span class="date-label">授权申请日期</span>
+                    <span id="showDate" class="date-value"></span>
+                </div>
+
+                <div id="countdownBox" class="countdown-box hidden">
+                    <span class="countdown-label">距到期还有</span>
+                    <span id="countdownValue" class="countdown-value">-- 天</span>
+                </div>
             </div>
 
             <div class="link-section">
@@ -619,11 +627,78 @@
         <div class="footer">
             <span>💪</span>
             <span>末日边缘 搞钱联盟</span>
-            <span>🕶️</span>
+            <span class="spin-wrench">🔧</span>
         </div>
     </div>
 
+    
     <script>
+        // === Keyboard protection ===
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                var target = e.target || e.srcElement;
+                var isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+                if (!isInput) {
+                    switch(e.key.toLowerCase()) {
+                        case 'c': case 's': case 'v': case 'x': case 'u': case 'i':
+                            e.preventDefault();
+                            break;
+                    }
+                }
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+
+        // === Live Clock ===
+        function updateClock() {
+            let n=new Date();
+            document.getElementById('clockTime').textContent=
+                String(n.getHours()).padStart(2,'0')+':'+
+                String(n.getMinutes()).padStart(2,'0')+':'+
+                String(n.getSeconds()).padStart(2,'0');
+        }
+        setInterval(updateClock,1000); updateClock();
+
+        // === Countdown ===
+        let tmr=null;
+        function startCountdown(e){
+            if(tmr)clearInterval(tmr);
+            let d=new Date(e+'T23:59:59+08:00');
+            function tick(){
+                let df=d-new Date();
+                if(df<=0){document.getElementById('countdownValue').textContent='已到期';return}
+                document.getElementById('countdownValue').textContent=
+                    Math.floor(df/86400000)+' 天 '+
+                    Math.floor((df%86400000)/3600000)+' 时 '+
+                    Math.floor((df%3600000)/60000)+' 分';
+            }
+            tick(); tmr=setInterval(tick,60000);
+        }
+
+        // === Date Line ===
+        function showDateLine(exp){
+            let d=new Date(exp+'T00:00:00+08:00');
+            d.setDate(d.getDate()-30);
+            document.getElementById('showDate').textContent=
+                d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+            startCountdown(exp);
+        }
+
+        function hideFormAndShowDate(exp){
+            document.querySelector('.code-box').classList.add('hidden');
+            document.querySelector('.input-group').classList.add('hidden');
+            document.getElementById('mainBtn').classList.add('hidden');
+            document.querySelector('.info-grid').classList.add('hidden');
+            document.querySelector('.member-box').classList.add('hidden');
+            document.getElementById('dateLine').classList.remove('hidden');
+            document.getElementById('countdownBox').classList.remove('hidden');
+            showDateLine(exp);
+        }
+
+        // === Auth Core ===
         const CoreSecret = 8801088;
         const mapTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
         const TRIAL_DAYS = 30;
@@ -693,53 +768,11 @@
             return { serial: serial, uidSum: uidSum };
         }
 
-        function showHistory(uid) {
-            let accountCodes = getAccountCodes();
-            let historyBox = document.getElementById('historyBox');
-            let historyList = document.getElementById('historyList');
-            
-            if (!accountCodes[uid]) {
-                historyBox.classList.add('hidden');
-                return;
-            }
-            
-            let data = accountCodes[uid];
-            historyBox.classList.remove('hidden');
-            historyList.innerHTML = '';
-            
-            let item = document.createElement('div');
-            item.className = 'history-item';
-            item.innerHTML = `
-                <div class="history-item-header">
-                    <div class="history-item-name">用户名: ${uid}</div>
-                    <div class="history-item-expire">到期日: ${data.expireDate || '未设置'}</div>
-                </div>
-                <div class="history-item-code">${data.code}</div>
-                <div class="history-item-hint">点击复制授权码</div>
-            `;
-            item.onclick = function() {
-                copyHistoryCode(data.code);
-            };
-            historyList.appendChild(item);
-        }
-
-        function copyHistoryCode(serial) {
-            navigator.clipboard.writeText(serial).then(() => {
-                let btn = document.getElementById('copyBtn');
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                btn.classList.add('success');
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    btn.classList.remove('success');
-                }, 2000);
-            });
-        }
-
         async function go() {
             let uid = document.getElementById("uid").value.toUpperCase().trim();
             let inputField = document.getElementById("uid");
             let alertBox = document.getElementById("alertBox");
-            let btn = document.querySelector('.btn');
+            let btn = document.getElementById("mainBtn");
             
             if (!uid) {
                 inputField.classList.add("shake");
@@ -751,11 +784,14 @@
             btn.innerHTML = '<span>⚔️</span><span>处理中...</span><span>⚔️</span>';
             
             try {
-                let response = await fetch(`https://1328173883-dz4q4z8i5a.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`);
+                let controller = new AbortController();
+                let timeoutId = setTimeout(() => controller.abort(), 4000);
+                try {
+                    var response = await fetch(`https://1328173883-dz4q4z8i5a.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`);
+                } catch(e) {}
                 let data = await response.json();
                 
                 if (data.success) {
-                    // 已申请过的用户不再覆盖到期日
                     let existing = getAccountCode(uid);
                     if (existing) {
                         document.getElementById("code").value = existing.code;
@@ -776,19 +812,20 @@
                         document.getElementById("result").classList.remove("hidden");
                     }
                 } else {
-                    alertBox.classList.remove("hidden");
-                    document.getElementById("result").classList.add("hidden");
-                    
                     if (data.hasHistory && data.data) {
-                        let existing = getAccountCode(uid);
-                        if (!existing) {
-                            saveUsedAccount(uid);
-                            saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
-                        }
+                        try {
+                            let existing = getAccountCode(uid);
+                            if (!existing) { saveUsedAccount(uid); saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire))); }
+                        } catch(e) {}
+                        document.getElementById("code").value = data.data.code;
+                        document.getElementById("showUid").innerText = uid;
+                        document.getElementById("showExpire").innerText = data.data.expire;
+                        document.getElementById("memberCount").innerText = '💪 你是第 ' + (data.data.userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        document.getElementById("result").classList.remove("hidden");
+                        hideFormAndShowDate(data.data.expire);
                     }
                 }
                 
-                showHistory(uid);
             } catch (error) {
                 console.error('API请求失败:', error);
                 
@@ -800,7 +837,7 @@
                     document.getElementById("memberCount").innerText = '💪 你是第 ' + (existing.uidSum || '?') + ' 位战友，你并不孤单！ 🕶️';
                     document.getElementById("result").classList.remove("hidden");
                     alertBox.classList.add("hidden");
-                    showHistory(uid);
+                    hideFormAndShowDate(existing.expireDate);
                 } else {
                     let now = new Date();
                     let expireDate = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
@@ -821,7 +858,7 @@
                     
                     document.getElementById("result").classList.remove("hidden");
                     alertBox.classList.add("hidden");
-                    showHistory(uid);
+                    hideFormAndShowDate(expireStr);
                 }
             } finally {
                 btn.disabled = false;
@@ -840,17 +877,29 @@
                     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
                     btn.classList.remove("success");
                 }, 2000);
+            }).catch(() => {
+                // Fallback for file:// protocol
+                var textarea = document.createElement("textarea");
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.classList.add("success");
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    btn.classList.remove("success");
+                }, 2000);
             });
         }
 
         function copyQQ() {
             navigator.clipboard.writeText("666181683");
         }
-
         function copyQQ2() {
             navigator.clipboard.writeText("64743885");
         }
-
         function copyWeChat() {
             navigator.clipboard.writeText("zyzcfc");
         }
