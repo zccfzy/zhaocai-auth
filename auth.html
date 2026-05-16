@@ -794,13 +794,16 @@
                 if (data.success) {
                     let existing = getAccountCode(uid);
                     if (existing) {
+                        // 场景2：已申请过 → 显示缓存码 + 隐藏表单 + 到期日倒计时
                         document.getElementById("code").value = existing.code;
                         document.getElementById("showUid").innerText = uid;
                         document.getElementById("showExpire").innerText = existing.expireDate;
                         document.getElementById("memberCount").innerText = '💪 你是第 ' + (existing.uidSum || '?') + ' 位战友，你并不孤单！ 🕶️';
                         document.getElementById("result").classList.remove("hidden");
                         alertBox.classList.add("hidden");
+                        hideFormAndShowDate(existing.expireDate);
                     } else {
+                        // 场景1：新用户第一次 → 保存 + 显示授权码，不隐藏表单
                         alertBox.classList.add("hidden");
                         saveUsedAccount(uid);
                         saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
@@ -858,7 +861,6 @@
                     
                     document.getElementById("result").classList.remove("hidden");
                     alertBox.classList.add("hidden");
-                    hideFormAndShowDate(expireStr);
                 }
             } finally {
                 btn.disabled = false;
