@@ -17,46 +17,144 @@
             align-items: center;
             justify-content: center;
             padding: 16px;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 50%, #0a0a0f 100%);
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1515 30%, #1a0a0a 70%, #0a0505 100%);
             color: #fff;
             overflow: hidden;
         }
         .fire-glow {
             position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
             border-radius: 50%;
-            pointer-events: none;
+            animation: pulse-glow 3s ease-in-out infinite;
             z-index: 0;
         }
         .fire-glow:nth-of-type(1) {
-            top: -200px;
-            right: -100px;
+            left: -100px;
+            bottom: -100px;
+            animation-delay: 1.5s;
         }
         .fire-glow:nth-of-type(2) {
-            bottom: -200px;
-            left: -100px;
+            right: -50px;
+            bottom: -50px;
+        }
+        .battle-scene {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at bottom, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at top right, rgba(220, 38, 38, 0.1) 0%, transparent 40%);
+            z-index: 0;
+        }
+        .smoke {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .explosion-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, rgba(255, 107, 53, 0.1) 40%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse-glow 4s ease-in-out infinite;
+            z-index: 0;
+        }
+        .explosion-glow:nth-of-type(4) {
+            top: 10%;
+            left: 20%;
+        }
+        .explosion-glow:nth-of-type(5) {
+            top: 30%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .scanline {
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 2px);
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .noise {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 99;
+        }
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ff6b35;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .particle:nth-child(1) { left: 10%; top: 20%; }
+        .particle:nth-child(2) { left: 85%; top: 35%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 25%; top: 60%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 70%; top: 75%; animation-delay: 0.5s; }
+        .particle:nth-child(5) { left: 45%; top: 15%; animation-delay: 1.5s; }
+        .particle:nth-child(6) { left: 5%; top: 80%; animation-delay: 2.5s; }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fire {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7); }
+            100% { box-shadow: 0 0 0 20px rgba(255, 107, 53, 0); }
         }
         .container {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
         }
         .card {
-            background: linear-gradient(145deg, rgba(20, 15, 15, 0.95), rgba(10, 10, 15, 0.95));
-            border-radius: 20px;
-            padding: 28px 24px;
-            border: 1px solid rgba(255, 107, 53, 0.15);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 5, 8, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2), inset 0 0 30px rgba(255, 107, 53, 0.05);
         }
         .title-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         .title {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
             background: linear-gradient(90deg, #ff6b35, #ffd700, #ff6b35);
             background-size: 200% auto;
@@ -67,114 +165,40 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 6px;
-            white-space: nowrap;
-        }
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
+            gap: 12px;
+            margin-bottom: 8px;
         }
         .subtitle {
             color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 14px;
+            margin-bottom: 12px;
         }
         .motto {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 11px;
-            color: #4b5563;
-            margin-bottom: 10px;
-        }
-        .live-clock {
-            text-align: center;
-            padding: 8px 0;
-            border-top: 1px solid rgba(75, 85, 99, 0.2);
-            border-bottom: 1px solid rgba(75, 85, 99, 0.2);
-            margin-bottom: 16px;
-        }
-        .clock-time {
-            font-size: 22px;
-            font-weight: bold;
-            color: #f59e0b;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-        .clock-time.blink {
-            animation: blink-dot 1s step-end infinite;
-        }
-        @keyframes blink-dot {
-            50% { opacity: 0.3; }
-        }
-        .clock-label {
-            font-size: 11px;
-            color: #6b7280;
-            margin-left: 6px;
-        }
-        .history-box {
-            background: rgba(10, 10, 15, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-        .history-title {
             font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(75, 85, 99, 0.2);
+            color: #ff6b35;
         }
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .history-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .history-item:active {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .history-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-        .history-item-name {
-            font-size: 11px;
-            color: #9ca3af;
-        }
-        .history-item-expire {
-            font-size: 11px;
-            color: #f59e0b;
-        }
-        .history-item-code {
-            font-size: 13px;
-            color: #ffd700;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-        }
-        .history-item-hint {
-            font-size: 10px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
+        .live-clock { text-align: center; padding: 8px 0; border-top: 1px solid rgba(75,85,99,.2); border-bottom: 1px solid rgba(75,85,99,.2); margin-bottom: 16px; margin-top: 12px; }
+        .clock-time { font-size: 22px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 2px; }
+        .clock-label { font-size: 11px; color: #6b7280; margin-left: 6px; }
+        .date-line { text-align: center; padding: 8px 0; margin-bottom: 8px; }
+        .date-label { font-size: 12px; color: #6b7280; }
+        .date-value { font-size: 14px; color: #f59e0b; font-weight: bold; font-family: 'Courier New', monospace; margin-left: 6px; letter-spacing: 1px; }
+        .countdown-box { text-align: center; padding: 8px; margin-bottom: 12px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); border-radius: 8px; }
+        .countdown-label { font-size: 11px; color: #6b7280; }
+        .countdown-value { font-size: 15px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 1px; }
+        .spin-wrench { display: inline-block; animation: wrench-spin 2s ease-in-out infinite; }
+        @keyframes wrench-spin { 0%,100%{transform:rotate(0deg)}20%{transform:rotate(25deg)}40%{transform:rotate(-15deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-5deg)} }
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
         .input-label {
             display: block;
-            font-size: 12px;
-            color: #6b7280;
+            font-size: 14px;
+            color: #9ca3af;
             margin-bottom: 8px;
         }
         .input-field {
@@ -182,7 +206,7 @@
             background: rgba(10, 10, 15, 0.5);
             border: 1px solid rgba(75, 85, 99, 0.3);
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 16px 20px;
             color: #fff;
             font-size: 16px;
             outline: none;
@@ -198,20 +222,13 @@
         .input-field.shake {
             animation: shake 0.5s ease-in-out;
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-        }
         .btn {
             width: 100%;
             background: linear-gradient(90deg, #ff6b35, #dc2626);
             color: #fff;
             border: none;
             border-radius: 12px;
-            padding: 14px;
+            padding: 16px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -220,58 +237,49 @@
             justify-content: center;
             gap: 8px;
             box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
-            transition: opacity 0.2s;
+            transition: all 0.3s;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
             user-select: none;
             -webkit-user-select: none;
+            z-index: 1000;
+            position: relative;
         }
         .btn > * {
             pointer-events: none;
         }
-        .btn:active {
-            opacity: 0.8;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
         }
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-        }
-
-        /* Desktop hover effect only */
-        @media (min-width: 768px) {
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
-                transition: all 0.3s;
-            }
+            transform: none;
         }
         .result-section {
-            margin-top: 16px;
+            margin-top: 24px;
             animation: fadeIn 0.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         .code-box {
             background: rgba(10, 10, 15, 0.5);
             border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
         .code-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 12px;
         }
         .code-label {
             font-size: 12px;
             color: #6b7280;
         }
         .copy-btn {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             border: none;
@@ -281,101 +289,191 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            touch-action: manipulation;
         }
-        .copy-btn:active {
+        .copy-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
         .copy-btn.success {
             background: rgba(34, 197, 94, 0.3);
+            animation: fire 0.3s ease-out;
         }
         .code-textarea {
             width: 100%;
             background: rgba(0, 0, 0, 0.5);
             border: none;
             border-radius: 8px;
-            padding: 8px 10px;
+            padding: 12px;
             color: #ffd700;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 14px;
             resize: none;
             outline: none;
-            min-height: auto;
-            line-height: 1.4;
+            min-height: 80px;
         }
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
         .info-box {
             background: rgba(10, 10, 15, 0.5);
-            border-radius: 8px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 12px;
         }
         .info-label {
-            font-size: 11px;
+            font-size: 12px;
             color: #6b7280;
             margin-bottom: 4px;
         }
         .info-value {
-            font-size: 13px;
-            font-weight: bold;
-            color: #e5e7eb;
+            font-size: 14px;
+            font-weight: medium;
+            color: #fff;
         }
         .info-value.gold {
-            color: #f59e0b;
+            color: #ffd700;
         }
         .member-box {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 8px;
-            padding: 8px;
+            background: linear-gradient(90deg, rgba(255, 107, 53, 0.2), rgba(220, 38, 38, 0.2));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
         }
         .member-text {
-            color: #fbbf24;
-            font-size: 13px;
+            color: #ffd700;
+            font-size: 14px;
+            font-weight: medium;
         }
-        .date-line {
+        .footer {
             text-align: center;
-            padding: 8px 0;
-            margin-bottom: 12px;
-        }
-        .date-label {
+            margin-top: 16px;
             font-size: 12px;
             color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        .date-value {
-            font-size: 14px;
-            color: #f59e0b;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            margin-left: 6px;
-            letter-spacing: 1px;
+        .hidden {
+            display: none;
         }
-        .countdown-box {
+        .alert-box {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
-            padding: 8px;
-            margin-bottom: 12px;
-            background: rgba(251, 191, 36, 0.08);
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            border-radius: 8px;
+            margin-bottom: 16px;
         }
-        .countdown-label {
+        .alert-text {
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: medium;
+        }
+        .alert-subtext {
+            color: #ffd700;
+            font-size: 12px;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+        .alert-contact {
+            color: #ff6b35;
+            cursor: pointer;
+        }
+        .history-box {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .history-title {
+            font-size: 12px;
+            color: #ff6b35;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .history-list {
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 3px;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 53, 0.4);
+            border-radius: 3px;
+        }
+        .history-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 53, 0.6);
+        }
+        .history-item {
+            background: rgba(10, 10, 15, 0.8);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+        .history-item:hover {
+            background: rgba(255, 107, 53, 0.15);
+            border-color: rgba(255, 107, 53, 0.4);
+            transform: translateY(-2px);
+        }
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .history-item-name {
+            font-size: 13px;
+            color: #fff;
+            font-weight: medium;
+        }
+        .history-item-expire {
+            font-size: 12px;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .history-item-code {
+            font-size: 12px;
+            color: #ffd700;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .history-item-hint {
             font-size: 11px;
             color: #6b7280;
-        }
-        .countdown-value {
-            font-size: 15px;
-            font-weight: bold;
-            color: #f59e0b;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
+            text-align: center;
         }
         .link-section {
-            margin-top: 20px;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
         }
         .link-item {
             display: flex;
@@ -385,111 +483,47 @@
             font-size: 13px;
             color: #9ca3af;
         }
-        .link-icon {
-            font-size: 14px;
+        .link-item:last-child {
+            margin-bottom: 0;
         }
         .link-item a {
             color: #ff6b35;
             text-decoration: none;
+            transition: color 0.3s;
         }
         .link-item a:hover {
-            text-decoration: underline;
+            color: #ffd700;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #4b5563;
+        .link-icon {
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-        }
-        .spin-wrench {
-            display: inline-block;
-            animation: wrench-spin 2s ease-in-out infinite;
-        }
-        @keyframes wrench-spin {
-            0%, 100% { transform: rotate(0deg); }
-            20% { transform: rotate(30deg); }
-            40% { transform: rotate(-20deg); }
-            60% { transform: rotate(15deg); }
-            80% { transform: rotate(-10deg); }
-        }
-        .hidden {
-            display: none !important;
-        }
-
-        /* Mobile responsive styles */
-        @media (max-width: 480px) {
-            .title {
-                font-size: 15px;
-            }
-            .subtitle {
-                font-size: 12px;
-            }
-            .motto {
-                font-size: 10px;
-            }
-            .clock-time {
-                font-size: 18px;
-            }
-            .input-field {
-                font-size: 14px;
-                padding: 12px 14px;
-            }
-            .btn {
-                font-size: 14px;
-                padding: 12px;
-            }
-            .code-textarea {
-                font-size: 11px;
-            }
-            .info-label {
-                font-size: 10px;
-            }
-            .info-value {
-                font-size: 12px;
-            }
-            .member-text {
-                font-size: 11px;
-            }
-            .date-label {
-                font-size: 11px;
-            }
-            .date-value {
-                font-size: 12px;
-            }
-            .countdown-label {
-                font-size: 10px;
-            }
-            .countdown-value {
-                font-size: 13px;
-            }
-            .link-item {
-                font-size: 12px;
-            }
-            .link-icon {
-                font-size: 13px;
-            }
-            .footer {
-                font-size: 11px;
-            }
-            .card {
-                padding: 24px 20px;
-            }
-            .input-group {
-                margin-bottom: 14px;
-            }
-            .result-section {
-                margin-top: 14px;
-            }
         }
     </style>
 </head>
 <body>
+    
+    
     <div class="fire-glow"></div>
     <div class="fire-glow"></div>
+    <div class="battle-scene"></div>
+    <div class="smoke"></div>
+    <div class="explosion-glow"></div>
+    <div class="explosion-glow"></div>
+    <div class="scanline"></div>
+    <div class="noise"></div>
+    
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
     <div class="container">
         <div class="card">
             <div class="title-section">
@@ -505,6 +539,7 @@
                     <span>无限迭代</span>
                     <span>·</span>
                     <span>日益增进</span>
+                    <span class="spin-wrench">🔧</span>
                 </div>
                 <div class="live-clock">
                     <span id="clockTime" class="clock-time">--:--:--</span>
@@ -512,29 +547,34 @@
                 </div>
             </div>
 
-            <div id="historyBox" class="history-box hidden">
-                <div class="history-title">
-                    <span>📋</span>
-                    <span>历史申请记录</span>
-                </div>
-                <div id="historyList" class="history-list"></div>
+            <div id="alertBox" class="alert-box hidden">
+                <p class="alert-text">⚠️ 该账号已申请过试用码</p>
+                <p class="alert-subtext">
+                    如觉得不错请购买正式码<br>
+                    联系QQ: <span class="alert-contact" onclick="copyQQ2()">64743885</span> | 
+                    微信: <span class="alert-contact" onclick="copyWeChat()">zyzcfc</span>
+                </p>
             </div>
 
-            <div id="formSection">
-                <div class="input-group">
-                    <label class="input-label">战友智大领峰用户名</label>
-                    <input type="text" id="uid" placeholder="输入战友智大领峰用户名" class="input-field" maxlength="50">
-                </div>
-
-                <button id="mainBtn" class="btn">
-                    <span>⚔️</span>
-                    <span>申请授权码</span>
-                    <span>⚔️</span>
-                </button>
+            <div class="input-group">
+                <label class="input-label">战友智大领峰用户名</label>
+                <input 
+                    type="text" 
+                    id="uid" 
+                    placeholder="输入战友智大领峰用户名"
+                    class="input-field"
+                    maxlength="50"
+                >
             </div>
+
+            <button id="mainBtn" class="btn" onclick="go();">
+                <span>⚔️</span>
+                <span>申请授权码</span>
+                <span>⚔️</span>
+            </button>
 
             <div id="result" class="result-section hidden">
-                <div id="codeBox" class="code-box">
+                <div class="code-box">
                     <div class="code-header">
                         <span class="code-label">授权码</span>
                         <button id="copyBtn" class="copy-btn">
@@ -573,7 +613,7 @@
                 </div>
             </div>
 
-            <div id="linkSection" class="link-section">
+            <div class="link-section">
                 <div class="link-item">
                     <span class="link-icon">💬</span>
                     <span>QQ群：</span>
@@ -586,40 +626,119 @@
             </div>
         </div>
 
-        <div id="footerSection" class="footer">
+        <div class="footer">
             <span>💪</span>
             <span>末日边缘 搞钱联盟</span>
             <span class="spin-wrench">🔧</span>
         </div>
     </div>
 
+    
     <script>
-        const ACCOUNT_CODES_KEY = 'zhaocai_auth_codes';
-        const USED_ACCOUNTS_KEY = 'zhaocai_used_accounts';
-        const TRIAL_DAYS = 30;
-        const mapTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const CoreSecret = 8888;
+        console.log('=== JS 脚本开始加载 ===');
+        
+        // === Keyboard protection ===
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                var target = e.target || e.srcElement;
+                var isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+                if (!isInput) {
+                    switch(e.key.toLowerCase()) {
+                        case 'c': case 's': case 'v': case 'x': case 'u': case 'i':
+                            e.preventDefault();
+                            break;
+                    }
+                }
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
 
-        function getExpireNum(date) {
-            let y = date.getFullYear();
-            let m = String(date.getMonth() + 1).padStart(2, '0');
-            let d = String(date.getDate()).padStart(2, '0');
-            return parseInt(y + m + d);
+        // === Live Clock ===
+        function updateClock() {
+            let n=new Date();
+            document.getElementById('clockTime').textContent=
+                String(n.getHours()).padStart(2,'0')+':'+
+                String(n.getMinutes()).padStart(2,'0')+':'+
+                String(n.getSeconds()).padStart(2,'0');
         }
+        setInterval(updateClock,1000); updateClock();
+
+        // === Countdown ===
+        let tmr=null;
+        function startCountdown(e){
+            if(tmr)clearInterval(tmr);
+            let d=new Date(e+'T23:59:59+08:00');
+            function tick(){
+                let df=d-new Date();
+                if(df<=0){document.getElementById('countdownValue').textContent='已到期';return}
+                document.getElementById('countdownValue').textContent=
+                    Math.floor(df/86400000)+' 天 '+
+                    Math.floor((df%86400000)/3600000)+' 时 '+
+                    Math.floor((df%3600000)/60000)+' 分';
+            }
+            tick(); tmr=setInterval(tick,60000);
+        }
+
+        // === Date Line ===
+        function showDateLine(exp){
+            let d=new Date(exp+'T00:00:00+08:00');
+            d.setDate(d.getDate()-30);
+            document.getElementById('showDate').textContent=
+                d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+            startCountdown(exp);
+        }
+
+        function hideFormAndShowDate(exp){
+            // 老用户：隐藏输入框和按钮，但保留授权码展示
+            document.querySelector('.input-group').classList.add('hidden');
+            document.getElementById('mainBtn').classList.add('hidden');
+            document.getElementById('dateLine').classList.remove('hidden');
+            document.getElementById('countdownBox').classList.remove('hidden');
+            showDateLine(exp);
+        }
+
+        // === Auth Core ===
+        const CoreSecret = 8801088;
+        const mapTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+        const TRIAL_DAYS = 30;
+        const USED_ACCOUNTS_KEY = 'zhaocai_used_accounts';
+        const ACCOUNT_CODES_KEY = 'zhaocai_account_codes';
+        const BYPASS_UIDS = ['ZCCFZY', 'TEST001', 'TEST002', 'TEST003'];
 
         function formatDate(date) {
-            return date.getFullYear() + '-' + 
-                   String(date.getMonth() + 1).padStart(2, '0') + '-' + 
-                   String(date.getDate()).padStart(2, '0');
+            let year = date.getFullYear();
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
 
-        function getUsedAccounts() { try { return JSON.parse(localStorage.getItem(USED_ACCOUNTS_KEY) || '[]'); } catch(e) { return []; } }
-        function getAccountCodes() { try { return JSON.parse(localStorage.getItem(ACCOUNT_CODES_KEY) || '{}'); } catch(e) { return {}; } }
-        function getAccountCode(uid) { let codes = getAccountCodes(); return codes[uid] || null; }
+        function getExpireNum(date) {
+            let year = date.getFullYear();
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let day = String(date.getDate()).padStart(2, '0');
+            return parseInt(year + month + day);
+        }
+
+        function getUsedAccounts() {
+            return JSON.parse(localStorage.getItem(USED_ACCOUNTS_KEY) || '[]');
+        }
+
+        function getAccountCodes() {
+            let data = JSON.parse(localStorage.getItem(ACCOUNT_CODES_KEY) || '{}');
+            return data;
+        }
+
+        function getAccountCode(uid) {
+            let codes = getAccountCodes();
+            return codes[uid] || null;
+        }
 
         function saveAccountCode(uid, code, uidSum, expireDate, expireNum) {
             let accountCodes = getAccountCodes();
-            accountCodes[uid] = { code, uidSum, time: Date.now(), expireDate, expireNum };
+            accountCodes[uid] = { code: code, uidSum: uidSum, time: Date.now(), expireDate: expireDate, expireNum: expireNum };
             localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
         }
 
@@ -631,6 +750,10 @@
             }
         }
 
+        function isAccountUsed(uid) {
+            return getUsedAccounts().includes(uid);
+        }
+
         function calculateSerial(uid, expireNum) {
             let uidSum = 0;
             for (let i = 1; i < uid.length; i++) {
@@ -639,239 +762,100 @@
                 uidSum += v;
             }
             uidSum += 1;
+            
             let salt = uidSum * 10000 + CoreSecret;
             let v1 = expireNum * 3 + CoreSecret + salt;
             let v2 = expireNum + salt + CoreSecret + 99999;
             let serial = "1" + v1 + CoreSecret + v2;
-            return { serial, uidSum };
-        }
-
-        // --- Live Clock ---
-        function updateClock() {
-            let now = new Date();
-            let h = String(now.getHours()).padStart(2, '0');
-            let m = String(now.getMinutes()).padStart(2, '0');
-            let s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clockTime').textContent = h + ':' + m + ':' + s;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // --- Countdown Timer ---
-        let countdownTimer = null;
-
-        function startCountdown(expireDateStr) {
-            stopCountdown();
-            let expireDate = new Date(expireDateStr + 'T23:59:59+08:00');
             
-            function tick() {
-                let now = new Date();
-                let diff = expireDate - now;
-                if (diff <= 0) {
-                    document.getElementById('countdownValue').textContent = '已到期';
-                    return;
-                }
-                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById('countdownValue').textContent = days + ' 天 ' + hours + ' 时 ' + mins + ' 分';
-            }
-            tick();
-            countdownTimer = setInterval(tick, 60000);
-        }
-
-        function stopCountdown() {
-            if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-        }
-
-        // --- History ---
-        function showHistory(uid) {
-            let accountCodes = getAccountCodes();
-            let historyBox = document.getElementById('historyBox');
-            let historyList = document.getElementById('historyList');
-            if (!accountCodes[uid]) {
-                historyBox.classList.add('hidden');
-                return;
-            }
-            let data = accountCodes[uid];
-            historyBox.classList.remove('hidden');
-            historyList.innerHTML = '';
-            let item = document.createElement('div');
-            item.className = 'history-item';
-            item.innerHTML = `
-                <div class="history-item-header">
-                    <div class="history-item-name">用户名: ${uid}</div>
-                    <div class="history-item-expire">到期日: ${data.expireDate || '未设置'}</div>
-                </div>
-                <div class="history-item-code">${data.code}</div>
-                <div class="history-item-hint">点击复制授权码</div>
-            `;
-            item.onclick = function() { copyCodeText(data.code); };
-            historyList.appendChild(item);
-        }
-
-        // --- Copy ---
-        function copyCodeText(text) {
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text);
-                } else {
-                    let ta = document.createElement('textarea');
-                    ta.value = text;
-                    ta.style.position = 'fixed';
-                    ta.style.opacity = '0';
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                }
-            } catch(e) {}
-        }
-
-        function fallbackCopy(text, btn) {
-            let textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                btn.classList.add("success");
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    btn.classList.remove("success");
-                }, 2000);
-            } catch(e) {}
-            document.body.removeChild(textarea);
-        }
-
-        function copyCode() {
-            let code = document.getElementById("code").value;
-            let btn = document.getElementById("copyBtn");
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(code).then(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                    btn.classList.add("success");
-                    setTimeout(() => {
-                        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                        btn.classList.remove("success");
-                    }, 2000);
-                }).catch(() => fallbackCopy(code, btn));
-            } else {
-                fallbackCopy(code, btn);
-            }
-        }
-
-        function copyQQ() { try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText("666181683"); } catch(e) {} }
-        function copyQQ2() { try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText("64743885"); } catch(e) {} }
-        function copyWeChat() { try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText("zyzcfc"); } catch(e) {} }
-
-        // --- Show Result ---
-        function showResult(code, uid, expireStr, userNum) {
-            document.getElementById("code").value = code;
-            document.getElementById("showUid").innerText = uid;
-            document.getElementById("showExpire").innerText = expireStr;
-            document.getElementById("memberCount").innerText = '💪 你是第 ' + (userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
-            document.getElementById("result").classList.remove("hidden");
-            document.getElementById("alertBox") && document.getElementById("alertBox").classList.add("hidden");
-        }
-
-        function hideFormAndCode() {
-            document.getElementById("codeBox").classList.add("hidden");
-            document.getElementById("formSection").classList.add("hidden");
-            document.querySelector(".info-grid").classList.add("hidden");
-            document.querySelector(".member-box").classList.add("hidden");
-            document.getElementById("dateLine").classList.remove("hidden");
-            document.getElementById("countdownBox").classList.remove("hidden");
-        }
-
-        function showDateLine(expireStr) {
-            document.getElementById("showDate").innerText = expireStr;
-            startCountdown(expireStr);
-        }
-
-        // --- Main ---
-        function generateLocal(uid, trialDays) {
-            let now = new Date();
-            let expireDate = new Date(now.getTime() + trialDays * 24 * 60 * 60 * 1000);
-            let expireNum = getExpireNum(expireDate);
-            let expireStr = formatDate(expireDate);
-            let result = calculateSerial(uid, expireNum);
-            let userNum = (result.uidSum % 100) + 101;
-            return { code: result.serial, expireStr, expireNum, uidSum: result.uidSum, userNum };
+            return { serial: serial, uidSum: uidSum };
         }
 
         async function go() {
+            console.log('go() 函数被调用了！');
             let uid = document.getElementById("uid").value.toUpperCase().trim();
             let inputField = document.getElementById("uid");
             let alertBox = document.getElementById("alertBox");
             let btn = document.getElementById("mainBtn");
             
-            if (!uid) { inputField.classList.add("shake"); setTimeout(() => inputField.classList.remove("shake"), 500); return; }
+            console.log('输入的UID:', uid);
+            
+            if (!uid) {
+                inputField.classList.add("shake");
+                setTimeout(() => inputField.classList.remove("shake"), 500);
+                return;
+            }
+            
+            // 检查是否在绕过列表中
+            let isBypass = BYPASS_UIDS.includes(uid);
             
             btn.disabled = true;
             btn.innerHTML = '<span>⚔️</span><span>处理中...</span><span>⚔️</span>';
             
             try {
-                let controller = new AbortController();
-                let timeoutId = setTimeout(() => controller.abort(), 4000);
-                try {
-                    var response = await fetch(
-                        `https://1328173883-dz4q4z8i5a.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`,
-                        { signal: controller.signal }
-                    );
-                } finally { clearTimeout(timeoutId); }
+                // 使用简单的 GET 请求，更稳定
+                const url = `https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`;
+                console.log('请求URL:', url);
+                
+                let response = await fetch(url);
                 let data = await response.json();
+                console.log('API返回:', data);
                 
                 if (data.success) {
-                    let existing = getAccountCode(uid);
-                    if (existing) {
-                        // Old user or returning user: show history
-                        showResult(existing.code, uid, existing.expireDate, existing.uidSum);
-                        hideFormAndCode();
-                        showDateLine(existing.expireDate);
-                        document.getElementById('historyBox').classList.remove('hidden');
-                        showHistory(uid);
-                    } else {
-                        // New user first time: don't show history
-                        try { saveUsedAccount(uid); saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire))); } catch(e) {}
-                        showResult(data.data.code, uid, data.data.expire, data.data.userNum);
+                    alertBox.classList.add("hidden");
+                    if (!isBypass) {
+                        saveUsedAccount(uid); // 不在绕过列表才保存记录
+                        saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
                     }
+                    
+                    document.getElementById("code").value = data.data.code;
+                    document.getElementById("showUid").innerText = uid;
+                    document.getElementById("showExpire").innerText = data.data.expire;
+                    document.getElementById("memberCount").innerText = '💪 你是第 ' + data.data.userNum + ' 位战友，你并不孤单！ 🕶️';
+                    document.getElementById("result").classList.remove("hidden");
                 } else {
                     if (data.hasHistory && data.data) {
-                        try {
-                            let existing = getAccountCode(uid);
-                            if (!existing) { saveUsedAccount(uid); saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire))); }
-                        } catch(e) {}
-                        showResult(data.data.code, uid, data.data.expire, data.data.userNum);
-                        hideFormAndCode();
-                        showDateLine(data.data.expire);
-                        document.getElementById('historyBox').classList.remove('hidden');
-                        showHistory(uid);
+                        if (!isBypass) {
+                            saveUsedAccount(uid); // 不在绕过列表才保存记录
+                            saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
+                        }
+                        
+                        // 老用户：同时显示提示和历史记录
+                        if (!isBypass) {
+                            alertBox.classList.remove("hidden"); // 显示提示
+                        }
+                        
+                        // 显示历史记录
+                        document.getElementById("code").value = data.data.code;
+                        document.getElementById("showUid").innerText = uid;
+                        document.getElementById("showExpire").innerText = data.data.expire;
+                        document.getElementById("memberCount").innerText = '💪 你是第 ' + (data.data.userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        document.getElementById("result").classList.remove("hidden");
+                        
+                        if (!isBypass) hideFormAndShowDate(data.data.expire); // 不在绕过列表才隐藏表单
+                    } else {
+                        if (isBypass) {
+                            // 绕过用户（应该不会走到这里，因为云函数处理了）
+                            alertBox.classList.add("hidden");
+                        } else {
+                            alertBox.classList.remove("hidden");
+                        }
                     }
                 }
+                
             } catch (error) {
-                console.error('API失败:', error);
-                try {
-                    let existing = getAccountCode(uid);
-                    if (existing) {
-                        // Old user or returning user: show history
-                        showResult(existing.code, uid, existing.expireDate, existing.uidSum);
-                        hideFormAndCode();
-                        showDateLine(existing.expireDate);
-                        document.getElementById('historyBox').classList.remove('hidden');
-                        showHistory(uid);
-                    } else {
-                        // New user first time: don't show history
-                        let local = generateLocal(uid, TRIAL_DAYS);
-                        try { saveUsedAccount(uid); saveAccountCode(uid, local.code, local.uidSum, local.expireStr, local.expireNum); } catch(e) {}
-                        showResult(local.code, uid, local.expireStr, local.userNum);
-                    }
-                } catch(e) {
-                    let local = generateLocal(uid, TRIAL_DAYS);
-                    showResult(local.code, uid, local.expireStr, local.userNum);
+                console.error('API请求失败:', error);
+                
+                // 尝试从本地存储获取
+                let existing = getAccountCode(uid);
+                if (existing) {
+                    document.getElementById("code").value = existing.code;
+                    document.getElementById("showUid").innerText = uid;
+                    document.getElementById("showExpire").innerText = existing.expireDate;
+                    document.getElementById("memberCount").innerText = '💪 你是第 ' + (existing.uidSum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                    document.getElementById("result").classList.remove("hidden");
+                    alertBox.classList.add("hidden");
+                    if (!isBypass) hideFormAndShowDate(existing.expireDate); // 不在绕过列表才隐藏表单
                 }
             } finally {
                 btn.disabled = false;
@@ -879,50 +863,68 @@
             }
         }
 
-        // Check if user has existing account (for returning users)
-        function checkExistingUser() {
-            let accountCodes = getAccountCodes();
-            let usedAccounts = getUsedAccounts();
+        function copyCode() {
+            let code = document.getElementById("code").value;
+            let btn = document.getElementById("copyBtn");
             
-            if (usedAccounts.length > 0) {
-                let lastUid = usedAccounts[usedAccounts.length - 1];
-                let existing = accountCodes[lastUid];
-                
-                if (existing) {
-                    // Old user: show history, expire date and countdown directly
-                    document.getElementById('formSection').classList.add('hidden');
-                    document.getElementById('historyBox').classList.remove('hidden');
-                    showHistory(lastUid);
-                    showResult(existing.code, lastUid, existing.expireDate, existing.uidSum);
-                    hideFormAndCode();
-                    showDateLine(existing.expireDate);
-                    return true;
-                }
-            }
-            return false;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.classList.add("success");
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    btn.classList.remove("success");
+                }, 2000);
+            }).catch(() => {
+                // Fallback for file:// protocol
+                var textarea = document.createElement("textarea");
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.classList.add("success");
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    btn.classList.remove("success");
+                }, 2000);
+            });
         }
 
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            const mainBtn = document.getElementById('mainBtn');
-            const copyBtn = document.getElementById('copyBtn');
+        function copyQQ() {
+            navigator.clipboard.writeText("666181683");
+        }
+        function copyQQ2() {
+            navigator.clipboard.writeText("64743885");
+        }
+        function copyWeChat() {
+            navigator.clipboard.writeText("zyzcfc");
+        }
+
+        // 页面加载完成后绑定事件
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('copyBtn').addEventListener('click', copyCode);
             
-            // For both click and touch events
-            function handleMainBtn(e) {
-                e.preventDefault();
-                if (!mainBtn.disabled) go();
+            // 清除绕过 UID 的历史记录，确保它们可以重新申请
+            let usedAccounts = getUsedAccounts();
+            let accountCodes = getAccountCodes();
+            let modified = false;
+            
+            BYPASS_UIDS.forEach(uid => {
+                if (usedAccounts.includes(uid)) {
+                    usedAccounts = usedAccounts.filter(u => u !== uid);
+                    modified = true;
+                }
+                if (accountCodes[uid]) {
+                    delete accountCodes[uid];
+                    modified = true;
+                }
+            });
+            
+            if (modified) {
+                localStorage.setItem(USED_ACCOUNTS_KEY, JSON.stringify(usedAccounts));
+                localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
             }
-            
-            function handleCopyBtn(e) {
-                e.preventDefault();
-                copyCode();
-            }
-            
-            mainBtn.addEventListener('click', handleMainBtn);
-            mainBtn.addEventListener('touchend', handleMainBtn);
-            
-            copyBtn.addEventListener('click', handleCopyBtn);
-            copyBtn.addEventListener('touchend', handleCopyBtn);
         });
     </script>
 </body>
