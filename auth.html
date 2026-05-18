@@ -736,9 +736,10 @@
             return codes[uid] || null;
         }
 
-        function saveAccountCode(uid, code, uidSum, expireDate, expireNum) {
+        // 说明：历史版本把 userNum 误命名成 uidSum，这里修正为 userNum（同时保持兼容读取）
+        function saveAccountCode(uid, code, userNum, expireDate, expireNum) {
             let accountCodes = getAccountCodes();
-            accountCodes[uid] = { code: code, uidSum: uidSum, time: Date.now(), expireDate: expireDate, expireNum: expireNum };
+            accountCodes[uid] = { code: code, userNum: userNum, time: Date.now(), expireDate: expireDate, expireNum: expireNum };
             localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
         }
 
@@ -811,7 +812,15 @@
                     document.getElementById("code").value = data.data.code;
                     document.getElementById("showUid").innerText = uid;
                     document.getElementById("showExpire").innerText = data.data.expire;
-                    document.getElementById("memberCount").innerText = '💪 你是第 ' + data.data.userNum + ' 位战友，你并不孤单！ 🕶️';
+                    const userNum = data.data.userNum;
+                    const totalUsers = data.data.totalUsers;
+                    if (totalUsers) {
+                        document.getElementById("memberCount").innerText =
+                            '💪 当前共有 ' + totalUsers + ' 位战友，你是第 ' + (userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                    } else {
+                        document.getElementById("memberCount").innerText =
+                            '💪 你是第 ' + (userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                    }
                     document.getElementById("result").classList.remove("hidden");
                 } else {
                     if (data.hasHistory && data.data) {
@@ -829,7 +838,15 @@
                         document.getElementById("code").value = data.data.code;
                         document.getElementById("showUid").innerText = uid;
                         document.getElementById("showExpire").innerText = data.data.expire;
-                        document.getElementById("memberCount").innerText = '💪 你是第 ' + (data.data.userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        const userNum2 = data.data.userNum;
+                        const totalUsers2 = data.data.totalUsers;
+                        if (totalUsers2) {
+                            document.getElementById("memberCount").innerText =
+                                '💪 当前共有 ' + totalUsers2 + ' 位战友，你是第 ' + (userNum2 || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        } else {
+                            document.getElementById("memberCount").innerText =
+                                '💪 你是第 ' + (userNum2 || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        }
                         document.getElementById("result").classList.remove("hidden");
                         
                         if (!isBypass) hideFormAndShowDate(data.data.expire); // 不在绕过列表才隐藏表单
@@ -852,7 +869,8 @@
                     document.getElementById("code").value = existing.code;
                     document.getElementById("showUid").innerText = uid;
                     document.getElementById("showExpire").innerText = existing.expireDate;
-                    document.getElementById("memberCount").innerText = '💪 你是第 ' + (existing.uidSum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                    const localUserNum = (existing.userNum || existing.uidSum || '?');
+                    document.getElementById("memberCount").innerText = '💪 你是第 ' + localUserNum + ' 位战友，你并不孤单！ 🕶️';
                     document.getElementById("result").classList.remove("hidden");
                     alertBox.classList.add("hidden");
                     if (!isBypass) hideFormAndShowDate(existing.expireDate); // 不在绕过列表才隐藏表单
