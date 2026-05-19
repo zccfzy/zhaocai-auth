@@ -773,13 +773,10 @@
         }
 
         async function go() {
-            console.log('go() 函数被调用了！');
-            let uid = document.getElementById("uid").value.toUpperCase().trim();
             let inputField = document.getElementById("uid");
+            let uid = inputField.value.toUpperCase().trim();
             let alertBox = document.getElementById("alertBox");
             let btn = document.getElementById("mainBtn");
-            
-            console.log('输入的UID:', uid);
             
             if (!uid) {
                 inputField.classList.add("shake");
@@ -787,20 +784,31 @@
                 return;
             }
             
-            // 检查是否在绕过列表中
             let isBypass = BYPASS_UIDS.includes(uid);
             
             btn.disabled = true;
             btn.innerHTML = '<span>⚔️</span><span>处理中...</span><span>⚔️</span>';
             
             try {
-                // 使用简单的 GET 请求，更稳定
-                const url = `https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com?uid=${encodeURIComponent(uid)}`;
-                console.log('请求URL:', url);
+                let response = await fetch('https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ uid: uid }),
+                    cache: 'no-cache'
+                });
                 
-                let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('HTTP错误: ' + response.status);
+                }
+                
                 let data = await response.json();
-                console.log('API返回:', data);
+                
+                if (!data || typeof data !== 'object') {
+                    throw new Error('响应数据无效');
+                }
                 
                 if (data.success) {
                     alertBox.classList.add("hidden");
@@ -812,14 +820,10 @@
                     document.getElementById("code").value = data.data.code;
                     document.getElementById("showUid").innerText = uid;
                     document.getElementById("showExpire").innerText = data.data.expire;
-                    const userNum = data.data.userNum;
-                    const totalUsers = data.data.totalUsers;
-                    if (totalUsers) {
-                        document.getElementById("memberCount").innerText =
-                            '💪 当前共有 ' + totalUsers + ' 位战友，你是第 ' + (userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                    if (data.data.totalUsers) {
+                        document.getElementById("memberCount").innerText = '💪 当前共有 ' + data.data.totalUsers + ' 位战友！ 🕶️';
                     } else {
-                        document.getElementById("memberCount").innerText =
-                            '💪 你是第 ' + (userNum || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        document.getElementById("memberCount").innerText = '';
                     }
                     document.getElementById("result").classList.remove("hidden");
                 } else {
@@ -829,23 +833,16 @@
                             saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
                         }
                         
-                        // 老用户：同时显示提示和历史记录
-                        if (!isBypass) {
-                            alertBox.classList.remove("hidden"); // 显示提示
-                        }
+                        alertBox.classList.add("hidden"); // 隐藏提示框
                         
                         // 显示历史记录
                         document.getElementById("code").value = data.data.code;
                         document.getElementById("showUid").innerText = uid;
                         document.getElementById("showExpire").innerText = data.data.expire;
-                        const userNum2 = data.data.userNum;
-                        const totalUsers2 = data.data.totalUsers;
-                        if (totalUsers2) {
-                            document.getElementById("memberCount").innerText =
-                                '💪 当前共有 ' + totalUsers2 + ' 位战友，你是第 ' + (userNum2 || '?') + ' 位战友，你并不孤单！ 🕶️';
+                        if (data.data.totalUsers) {
+                            document.getElementById("memberCount").innerText = '💪 当前共有 ' + data.data.totalUsers + ' 位战友！ 🕶️';
                         } else {
-                            document.getElementById("memberCount").innerText =
-                                '💪 你是第 ' + (userNum2 || '?') + ' 位战友，你并不孤单！ 🕶️';
+                            document.getElementById("memberCount").innerText = '';
                         }
                         document.getElementById("result").classList.remove("hidden");
                         
@@ -861,9 +858,6 @@
                 }
                 
             } catch (error) {
-                console.error('API请求失败:', error);
-                
-                // 尝试从本地存储获取
                 let existing = getAccountCode(uid);
                 if (existing) {
                     document.getElementById("code").value = existing.code;
@@ -873,7 +867,7 @@
                     document.getElementById("memberCount").innerText = '💪 你是第 ' + localUserNum + ' 位战友，你并不孤单！ 🕶️';
                     document.getElementById("result").classList.remove("hidden");
                     alertBox.classList.add("hidden");
-                    if (!isBypass) hideFormAndShowDate(existing.expireDate); // 不在绕过列表才隐藏表单
+                    if (!isBypass) hideFormAndShowDate(existing.expireDate);
                 }
             } finally {
                 btn.disabled = false;
