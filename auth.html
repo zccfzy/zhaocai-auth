@@ -382,6 +382,23 @@
             color: #ff6b35;
             cursor: pointer;
         }
+        .alert-content {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .alert-item {
+            color: #ffd700;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        .alert-contact-info {
+            color: #ffd700;
+            font-size: 12px;
+            margin-top: 10px;
+            line-height: 1.8;
+            text-align: center;
+        }
         .history-box {
             background: rgba(255, 107, 53, 0.1);
             border: 1px solid rgba(255, 107, 53, 0.3);
@@ -548,12 +565,14 @@
             </div>
 
             <div id="alertBox" class="alert-box hidden">
-                <p class="alert-text">⚠️ 该账号已申请过试用码</p>
-                <p class="alert-subtext">
-                    如觉得不错请购买正式码<br>
-                    联系QQ: <span class="alert-contact" onclick="copyQQ2()">64743885</span> | 
-                    微信: <span class="alert-contact" onclick="copyWeChat()">zyzcfc</span>
-                </p>
+                <p class="alert-text">⚠️ 您已领取过试用码</p>
+                <div class="alert-content">
+                    <p class="alert-item">✅ 正式版核心权益：永久去水印 | 运行效率优化 | 持续功能更新</p>
+                    <p class="alert-item">🎁 限时福利：购买即赠卖方期权收租策略，一码通用</p>
+                    <p class="alert-item">⚠️ 试用版说明：后续将保持当前功能不再迭代</p>
+                    <p class="alert-item">💡 提改进意见被采纳，可享正式版专属购买优惠</p>
+                    <p class="alert-contact-info">购买联系：微信 <span class="alert-contact" onclick="copyWeChat()">zyzcfc</span> | QQ <span class="alert-contact" onclick="copyQQ2()">64743885</span></p>
+                </div>
             </div>
 
             <div class="input-group">
