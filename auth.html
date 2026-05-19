@@ -833,7 +833,7 @@
                             saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
                         }
                         
-                        alertBox.classList.add("hidden"); // 隐藏提示框
+                        alertBox.classList.remove("hidden"); // 显示提示框
                         
                         // 显示历史记录
                         document.getElementById("code").value = data.data.code;
