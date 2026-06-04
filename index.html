@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)https://zccfzy.github.io/zhaocai-auth/index.html -->
+<!-- saved from url=(0038)https://zccfzy.github.io/zhaocai-auth/ -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -602,6 +602,93 @@
             border: none;
         }
         .modal-close:hover { color: #fff; }
+
+        /* ===== Contact Form ===== */
+        .form-group {
+            text-align: left;
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+        .form-group label .required {
+            color: #ff6b35;
+        }
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            border-color: rgba(255, 107, 53, 0.5);
+            background: rgba(255, 107, 53, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        .form-input::placeholder {
+            color: #4b5563;
+        }
+        .form-error {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        .form-error.show { display: block; }
+        .form-success {
+            color: #22c55e;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+        .form-success.show { display: block; }
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(90deg, #ff6b35, #dc2626);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s;
+        }
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+        }
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .form-submit .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .form-submit.loading .spinner { display: inline-block; }
+        .form-submit.loading .btn-text { display: none; }
     </style>
 </head>
 <body>
@@ -821,34 +908,225 @@
         </div>
     </div>
 
-    <!-- 申请弹窗 -->
+    <!-- 申请弹窗 - 联系表单 -->
     <div id="applyModal" class="modal-overlay hidden" onclick="closeModal(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
-            <div class="modal-icon">📝</div>
-            <div class="modal-title">申请试用授权码</div>
-            <div class="modal-desc">
-                请先填写收集表提交你的账号信息，<br>
-                提交后会自动跳转到授权码生成页面 🚀
+            <div class="modal-icon" id="modalIcon">📝</div>
+            <div class="modal-title" id="modalTitle">申请试用授权码</div>
+            <div class="modal-desc" id="modalDesc">
+                请填写您的联系方式，提交后自动跳转到授权码生成页面 🚀
             </div>
-            <a href="https://docs.qq.com/form/page/DQ2psbmhDcUpmYWta#/fill-detail" target="_blank" class="modal-link" onclick="closeModal(event)">
-                📋 去填写收集表
-            </a>
+
+            <!-- 联系表单 -->
+            <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="form-group">
+                    <label><span class="required">*</span> QQ / 微信 <span style="font-weight:normal;color:#6b7280;font-size:12px;">（如没有QQ可留微信）</span></label>
+                    <input type="text" id="formWechat" class="form-input" placeholder="请输入您的QQ或微信号" required>
+                    <div class="form-error" id="errWechat">请填写QQ或微信号</div>
+                </div>
+                <div class="form-group">
+                    <label><span class="required">*</span> 智大领峰账号</label>
+                    <input type="text" id="formUID" class="form-input" placeholder="请输入您的智大领峰账号（UID）" required>
+                    <div class="form-error" id="errUID">请输入智大领峰账号</div>
+                </div>
+                <button type="submit" id="submitBtn" class="form-submit">
+                    <span class="spinner"></span>
+                    <span class="btn-text">🚀 提交并获取授权码</span>
+                </button>
+                <div class="form-success" id="formSuccess">✅ 提交成功！正在跳转...</div>
+                <div class="form-error" id="formError"></div>
+            </form>
+
             <br>
             <button class="modal-close" onclick="closeModal()">稍后再说</button>
         </div>
     </div>
 
     <script>
+        // ===== 云函数 API 地址（部署后替换为实际地址）=====
+        var API_BASE = 'https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com';
+
         function showApplyModal() {
             document.getElementById('applyModal').classList.remove('hidden');
+            // 重置表单
+            document.getElementById('contactForm').reset();
+            document.getElementById('formSuccess').classList.remove('show');
+            document.getElementById('formError').classList.remove('show');
+            document.getElementById('formError').textContent = '';
         }
+
         function closeModal(e) {
             if (!e || e.target === e.currentTarget || e.type === 'click') {
                 document.getElementById('applyModal').classList.add('hidden');
             }
         }
+
+        // ===== 表单提交 =====
+        function submitContact(e) {
+            e.preventDefault();
+
+            var wechat = document.getElementById('formWechat').value.trim();
+            var uid = document.getElementById('formUID').value.trim();
+
+            // 隐藏所有错误
+            document.querySelectorAll('.form-error').forEach(function(el) { el.classList.remove('show'); });
+
+            // 验证
+            var hasError = false;
+            if (!wechat) {
+                document.getElementById('errWechat').classList.add('show');
+                hasError = true;
+            }
+            if (!uid) {
+                document.getElementById('errUID').classList.add('show');
+                hasError = true;
+            }
+            if (hasError) return;
+
+            // 显示加载状态
+            var btn = document.getElementById('submitBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            // 提交到云函数
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', API_BASE, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.timeout = 15000;
+
+            xhr.onload = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+
+                if (xhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.success) {
+                            // 联系方式已保存 → 直接调用云函数生成授权码
+                            document.getElementById('modalIcon').textContent = '⏳';
+                            document.getElementById('modalTitle').textContent = '正在生成授权码...';
+                            document.getElementById('modalDesc').textContent = '';
+                            document.getElementById('formSuccess').classList.add('show');
+                            document.getElementById('contactForm').style.display = 'none';
+
+                            var xhr2 = new XMLHttpRequest();
+                            xhr2.open('POST', API_BASE, true);
+                            xhr2.setRequestHeader('Content-Type', 'application/json');
+                            xhr2.timeout = 15000;
+
+                            xhr2.onload = function() {
+                                if (xhr2.status === 200) {
+                                    try {
+                                        var result = JSON.parse(xhr2.responseText);
+                                        if (result.success) {
+                                            var code = result.data.code;
+                                            document.getElementById('modalIcon').textContent = '';
+                                            document.getElementById('modalTitle').textContent = '';
+                                            document.getElementById('modalDesc').innerHTML =
+                                                // 授权码框
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
+                                                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+                                                '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
+                                                '<button onclick="copyCodeStr(\'' + code + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">' +
+                                                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code + '</textarea></div>' +
+                                                // 信息网格
+                                                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">战友智大领峰用户名</div>' +
+                                                '<div style="font-size:14px;color:#fff;">' + result.data.uid + '</div></div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">授权到期日</div>' +
+                                                '<div style="font-size:14px;color:#ffd700;font-weight:bold;">' + result.data.expire + '</div></div></div>' +
+                                                // 战友数
+                                                '<div style="background:linear-gradient(90deg,rgba(255,107,53,0.2),rgba(220,38,38,0.2));border:1px solid rgba(255,107,53,0.3);border-radius:12px;padding:12px;text-align:center;margin-bottom:8px;">' +
+                                                '<span style="color:#ffd700;font-size:14px;">💪 当前共有 ' + result.data.totalUsers + ' 位战友！ 🕶️</span></div>';
+                                        } else if (result.hasHistory && result.data) {
+                                            var code2 = result.data.code;
+                                            document.getElementById('modalIcon').textContent = '';
+                                            document.getElementById('modalTitle').textContent = '';
+                                            document.getElementById('modalDesc').innerHTML =
+                                                '<div style="text-align:center;margin-bottom:8px;color:#ef4444;font-size:13px;">⚠️ 您已领取过试用码</div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
+                                                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+                                                '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
+                                                '<button onclick="copyCodeStr(\'' + code2 + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">' +
+                                                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code2 + '</textarea></div>' +
+                                                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">战友智大领峰用户名</div>' +
+                                                '<div style="font-size:14px;color:#fff;">' + result.data.uid + '</div></div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">授权到期日</div>' +
+                                                '<div style="font-size:14px;color:#ffd700;font-weight:bold;">' + result.data.expire + '</div></div></div>' +
+                                                '<div style="font-size:11px;color:#6b7280;text-align:center;">💡 提改进意见被采纳，可享正式版专属购买优惠</div>' +
+                                                '<div style="font-size:12px;color:#ffd700;text-align:center;margin-top:8px;">购买联系：微信 zyzcfc | QQ 64743885</div>';
+                                        } else {
+                                            document.getElementById('modalDesc').innerHTML =
+                                                '<div style="color:#ef4444;">生成失败：' + (result.message || '未知错误') + '</div>';
+                                        }
+                                    } catch (e) {
+                                        document.getElementById('modalDesc').innerHTML =
+                                            '<div style="color:#ef4444;">解析结果失败，请重试</div>';
+                                    }
+                                } else {
+                                    document.getElementById('modalDesc').innerHTML =
+                                        '<div style="color:#ef4444;">网络错误，请重试</div>';
+                                }
+                            };
+                            xhr2.onerror = function() {
+                                document.getElementById('modalDesc').innerHTML =
+                                    '<div style="color:#ef4444;">网络连接失败，请重试</div>';
+                            };
+                            xhr2.send(JSON.stringify({ uid: uid }));
+                        } else {
+                            document.getElementById('formError').textContent = resp.message || '提交失败，请重试';
+                            document.getElementById('formError').classList.add('show');
+                        }
+                    } catch (err) {
+                        document.getElementById('formError').textContent = '服务器响应异常，请重试';
+                        document.getElementById('formError').classList.add('show');
+                    }
+                } else {
+                    document.getElementById('formError').textContent = '网络错误（' + xhr.status + '），请重试';
+                    document.getElementById('formError').classList.add('show');
+                }
+            };
+
+            xhr.onerror = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                document.getElementById('formError').textContent = '网络连接失败，请检查网络后重试';
+                document.getElementById('formError').classList.add('show');
+            };
+
+            xhr.ontimeout = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                document.getElementById('formError').textContent = '请求超时，请重试';
+                document.getElementById('formError').classList.add('show');
+            };
+
+            // 发送 contact 数据
+            xhr.send(JSON.stringify({
+                action: 'contact',
+                wechat: wechat,
+                uid: uid
+            }));
+        }
+
         function copyQQ() {
             navigator.clipboard.writeText("666181683");
+        }
+
+        function copyCodeStr(code, btn) {
+            navigator.clipboard.writeText(code).then(function() {
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(function() {
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                }, 2000);
+            });
         }
 
         // ESC关闭弹窗
