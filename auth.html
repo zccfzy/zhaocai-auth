@@ -1,94 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0038)https://zccfzy.github.io/zhaocai-auth/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>赵财期权末日轮策略 - 试用版授权码申请</title>
+    <title>赵财期权 · 末日轮情景分析</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: linear-gradient(135deg, #1a0a0a 0%, #2d1515 30%, #1a0a0a 70%, #0a0505 100%);
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 30%, #0d0d12 60%, #0a0505 100%);
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
         }
-        .fire-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse-glow 3s ease-in-out infinite;
-            z-index: 0;
-        }
-        .fire-glow:nth-of-type(1) {
-            left: -100px;
-            bottom: -100px;
-            animation-delay: 1.5s;
-        }
-        .fire-glow:nth-of-type(2) {
-            right: -50px;
-            bottom: -50px;
-        }
-        .battle-scene {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(ellipse at bottom, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at top right, rgba(220, 38, 38, 0.1) 0%, transparent 40%);
-            z-index: 0;
-        }
-        .smoke {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .explosion-glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, rgba(255, 107, 53, 0.1) 40%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse-glow 4s ease-in-out infinite;
-            z-index: 0;
-        }
-        .explosion-glow:nth-of-type(4) {
-            top: 10%;
-            left: 20%;
-        }
-        .explosion-glow:nth-of-type(5) {
-            top: 30%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-        .scanline {
-            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 2px);
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 100;
-        }
-        .noise {
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 99;
-        }
+
+        /* 背景粒子 */
         .particles {
             position: fixed;
             inset: 0;
@@ -98,865 +24,1167 @@
         }
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ff6b35;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 107, 53, 0.4);
             border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite;
         }
-        .particle:nth-child(1) { left: 10%; top: 20%; }
-        .particle:nth-child(2) { left: 85%; top: 35%; animation-delay: 1s; }
-        .particle:nth-child(3) { left: 25%; top: 60%; animation-delay: 2s; }
-        .particle:nth-child(4) { left: 70%; top: 75%; animation-delay: 0.5s; }
-        .particle:nth-child(5) { left: 45%; top: 15%; animation-delay: 1.5s; }
-        .particle:nth-child(6) { left: 5%; top: 80%; animation-delay: 2.5s; }
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; top: 60%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 50%; top: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 70%; top: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(5) { left: 85%; top: 40%; animation-delay: 1.5s; }
+        .particle:nth-child(6) { left: 20%; top: 80%; animation-delay: 2.5s; }
+        .particle:nth-child(7) { left: 65%; top: 15%; animation-delay: 3s; }
+        .particle:nth-child(8) { left: 45%; top: 90%; animation-delay: 1.8s; }
+        .particle:nth-child(9) { left: 90%; top: 55%; animation-delay: 2.2s; }
+        .particle:nth-child(10) { left: 5%; top: 45%; animation-delay: 0.7s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-30px) scale(1.5); opacity: 1; }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+
+        /* 光晕 */
+        .glow {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
         }
-        @keyframes shimmer {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
+        .glow-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.12) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            animation: pulseGlow 4s ease-in-out infinite;
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        .glow-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+            bottom: -80px; left: -80px;
+            animation: pulseGlow 5s ease-in-out infinite;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .glow-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 6s ease-in-out infinite;
         }
-        @keyframes fire {
-            0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7); }
-            100% { box-shadow: 0 0 0 20px rgba(255, 107, 53, 0); }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
+
         .container {
             position: relative;
             z-index: 10;
-            width: 100%;
-            max-width: 480px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .card {
-            background: rgba(5, 5, 8, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2), inset 0 0 30px rgba(255, 107, 53, 0.05);
+
+        /* ===== Nav ===== */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.15);
+            margin-bottom: 40px;
         }
-        .title-section {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .title {
-            font-size: 24px;
+        .nav-logo {
+            font-size: 18px;
             font-weight: bold;
-            background: linear-gradient(90deg, #ff6b35, #ffd700, #ff6b35);
-            background-size: 200% auto;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 8px;
         }
-        .subtitle {
-            color: #6b7280;
+        .nav-links {
+            display: flex;
+            gap: 24px;
             font-size: 14px;
-            margin-bottom: 12px;
         }
-        .motto {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #ff6b35; }
+
+        /* ===== Hero ===== */
+        .hero {
+            text-align: center;
+            padding: 20px 0 30px;
+            animation: fadeUp 0.8s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
             font-size: 12px;
             color: #ff6b35;
+            margin-bottom: 30px;
         }
-        .live-clock { text-align: center; padding: 8px 0; border-top: 1px solid rgba(75,85,99,.2); border-bottom: 1px solid rgba(75,85,99,.2); margin-bottom: 16px; margin-top: 12px; }
-        .clock-time { font-size: 22px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 2px; }
-        .clock-label { font-size: 11px; color: #6b7280; margin-left: 6px; }
-        .date-line { text-align: center; padding: 8px 0; margin-bottom: 8px; }
-        .date-label { font-size: 12px; color: #6b7280; }
-        .date-value { font-size: 14px; color: #f59e0b; font-weight: bold; font-family: 'Courier New', monospace; margin-left: 6px; letter-spacing: 1px; }
-        .countdown-box { text-align: center; padding: 8px; margin-bottom: 12px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); border-radius: 8px; }
-        .countdown-label { font-size: 11px; color: #6b7280; }
-        .countdown-value { font-size: 15px; font-weight: bold; color: #f59e0b; font-family: 'Courier New', monospace; letter-spacing: 1px; }
-        .spin-wrench { display: inline-block; animation: wrench-spin 2s ease-in-out infinite; }
-        @keyframes wrench-spin { 0%,100%{transform:rotate(0deg)}20%{transform:rotate(25deg)}40%{transform:rotate(-15deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-5deg)} }
-        .input-group {
-            margin-bottom: 24px;
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #ff6b35 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .input-label {
-            display: block;
-            font-size: 14px;
+        .hero p {
+            font-size: 18px;
             color: #9ca3af;
-            margin-bottom: 8px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
         }
-        .input-field {
-            width: 100%;
-            background: rgba(10, 10, 15, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            border-radius: 12px;
-            padding: 16px 20px;
+        .hero-motto {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .hero-motto span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hero-motto .dot {
+            color: #ff6b35;
+        }
+
+        /* ===== Buttons ===== */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #ff6b35, #dc2626);
             color: #fff;
-            font-size: 16px;
-            outline: none;
+            border: none;
+            border-radius: 14px;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 25px rgba(255, 107, 53, 0.4);
             transition: all 0.3s;
         }
-        .input-field:focus {
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(255, 107, 53, 0.6);
         }
-        .input-field::placeholder {
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ===== Stats ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* ===== Sections ===== */
+        .section {
+            padding: 30px 0;
+            animation: fadeUp 0.8s ease-out;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .section-sub {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* ===== Features ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .features { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 15px; padding: 0 10px; }
+            .hero { padding: 20px 0 30px; }
+            .hero-motto { flex-wrap: wrap; gap: 8px; font-size: 12px; }
+            .btn-primary { padding: 16px 24px; font-size: 16px; width: 100%; }
+            .btn-wrap { flex-direction: column; gap: 10px; }
+            .nav-links { gap: 12px; font-size: 12px; }
+            .nav { margin-bottom: 30px; }
+            .container { padding: 12px; }
+            .section { padding: 20px 0; }
+            .section-title { font-size: 22px; }
+            .stat-number { font-size: 22px; }
+            .stat-card { padding: 14px; }
+            .feature-card { padding: 20px; }
+            .risk-box { padding: 20px; }
+            .modal-box { padding: 24px 16px; }
+            .modal-title { font-size: 18px; }
+            .modal-link { width: 100%; text-align: center; padding: 14px 20px; }
+            .step { padding: 16px 12px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 22px; }
+            .hero-badge { font-size: 11px; padding: 4px 12px; }
+            .step-title { font-size: 12px; }
+            .step-desc { font-size: 11px; }
+            .feature-icon { font-size: 26px; }
+            .feature-title { font-size: 14px; }
+            .feature-desc { font-size: 12px; }
+            .steps { gap: 10px; }
+            .features { gap: 12px; }
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            background: rgba(255, 107, 53, 0.05);
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* ===== How it works ===== */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .steps { grid-template-columns: 1fr; }
+        }
+        .step {
+            text-align: center;
+            padding: 24px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            position: relative;
+        }
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b35, #dc2626);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 auto 12px;
+        }
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        .step-arrow {
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b35;
+            font-size: 18px;
+        }
+        @media (max-width: 768px) {
+            .step-arrow { display: none; }
+        }
+
+        /* ===== Risk ===== */
+        .risk-box {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .risk-title {
+            color: #ef4444;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .risk-list {
+            list-style: none;
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 2;
+        }
+        .risk-list li::before {
+            content: "⚠️ ";
+        }
+
+        /* ===== Pricing ===== */
+        .pricing {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .pricing-compare {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .pricing-compare-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+        .pricing-compare .price-high {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ef4444;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444;
+        }
+        .pricing-compare .arrow-down {
+            font-size: 28px;
+            color: #ff6b35;
+            margin: 8px 0;
+        }
+        .pricing-compare .price-low {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-compare .price-label {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+        .pricing-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px 24px;
+        }
+        .pricing-row-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+        .pricing-row-name {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .pricing-row-original {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .pricing-row-original s {
+            color: #6b7280;
+        }
+        .pricing-row-price {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-row-badge {
+            font-size: 11px;
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        .pricing-note {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #4b5563;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-overlay.hidden { display: none; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-box {
+            background: #0d0d12;
+            border: 1px solid rgba(255,107,53,0.3);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-icon { font-size: 48px; margin-bottom: 16px; }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .modal-desc { font-size: 14px; color: #9ca3af; line-height: 1.6; margin-bottom: 24px; }
+        .modal-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff6b35, #dc2626);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+            transition: all 0.3s;
+        }
+        .modal-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255,107,53,0.6);
+        }
+        .modal-close {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .modal-close:hover { color: #fff; }
+
+        /* ===== Contact Form ===== */
+        .form-group {
+            text-align: left;
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+        .form-group label .required {
+            color: #ff6b35;
+        }
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            border-color: rgba(255, 107, 53, 0.5);
+            background: rgba(255, 107, 53, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        .form-input::placeholder {
             color: #4b5563;
         }
-        .input-field.shake {
-            animation: shake 0.5s ease-in-out;
+        .form-error {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
         }
-        .btn {
+        .form-error.show { display: block; }
+        .form-success {
+            color: #22c55e;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+        .form-success.show { display: block; }
+        .form-submit {
             width: 100%;
             background: linear-gradient(90deg, #ff6b35, #dc2626);
             color: #fff;
             border: none;
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px 32px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
             transition: all 0.3s;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-user-select: none;
-            z-index: 1000;
-            position: relative;
         }
-        .btn > * {
-            pointer-events: none;
-        }
-        .btn:hover {
+        .form-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
         }
-        .btn:disabled {
+        .form-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
-        .result-section {
-            margin-top: 24px;
-            animation: fadeIn 0.5s ease-out;
-        }
-        .code-box {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .code-label {
-            font-size: 12px;
-            color: #6b7280;
-        }
-        .copy-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .copy-btn.success {
-            background: rgba(34, 197, 94, 0.3);
-            animation: fire 0.3s ease-out;
-        }
-        .code-textarea {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            color: #ffd700;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            resize: none;
-            outline: none;
-            min-height: 80px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .info-box {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            padding: 12px;
-        }
-        .info-label {
-            font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 4px;
-        }
-        .info-value {
-            font-size: 14px;
-            font-weight: medium;
-            color: #fff;
-        }
-        .info-value.gold {
-            color: #ffd700;
-        }
-        .member-box {
-            background: linear-gradient(90deg, rgba(255, 107, 53, 0.2), rgba(220, 38, 38, 0.2));
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-        }
-        .member-text {
-            color: #ffd700;
-            font-size: 14px;
-            font-weight: medium;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 12px;
-            color: #6b7280;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .hidden {
+        .form-submit .spinner {
             display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
         }
-        .alert-box {
-            background: rgba(220, 38, 38, 0.2);
-            border: 1px solid rgba(220, 38, 38, 0.5);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 16px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
-        .alert-text {
-            color: #ef4444;
-            font-size: 14px;
-            font-weight: medium;
-        }
-        .alert-subtext {
-            color: #ffd700;
-            font-size: 12px;
-            margin-top: 10px;
-            line-height: 1.8;
-        }
-        .alert-contact {
-            color: #ff6b35;
-            cursor: pointer;
-        }
-        .alert-content {
-            margin-top: 10px;
-            text-align: left;
-        }
-        .alert-item {
-            color: #ffd700;
-            font-size: 12px;
-            line-height: 1.6;
-            margin-bottom: 6px;
-        }
-        .alert-contact-info {
-            color: #ffd700;
-            font-size: 12px;
-            margin-top: 10px;
-            line-height: 1.8;
-            text-align: center;
-        }
-        .history-box {
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .history-title {
-            font-size: 12px;
-            color: #ff6b35;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .history-list {
-            max-height: 120px;
-            overflow-y: auto;
-        }
-        .history-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .history-list::-webkit-scrollbar-track {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 3px;
-        }
-        .history-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 107, 53, 0.4);
-            border-radius: 3px;
-        }
-        .history-list::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 107, 53, 0.6);
-        }
-        .history-item {
-            background: rgba(10, 10, 15, 0.8);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-        }
-        .history-item:last-child {
-            margin-bottom: 0;
-        }
-        .history-item:hover {
-            background: rgba(255, 107, 53, 0.15);
-            border-color: rgba(255, 107, 53, 0.4);
-            transform: translateY(-2px);
-        }
-        .history-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .history-item-name {
-            font-size: 13px;
-            color: #fff;
-            font-weight: medium;
-        }
-        .history-item-expire {
-            font-size: 12px;
-            color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        .history-item-code {
-            font-size: 12px;
-            color: #ffd700;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 6px;
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-        .history-item-hint {
-            font-size: 11px;
-            color: #6b7280;
-            text-align: center;
-        }
-        .link-section {
-            margin-top: 16px;
-            padding: 12px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-        }
-        .link-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #9ca3af;
-        }
-        .link-item:last-child {
-            margin-bottom: 0;
-        }
-        .link-item a {
-            color: #ff6b35;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .link-item a:hover {
-            color: #ffd700;
-        }
-        .link-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .form-submit.loading .spinner { display: inline-block; }
+        .form-submit.loading .btn-text { display: none; }
     </style>
 </head>
 <body>
-    
-    
-    <div class="fire-glow"></div>
-    <div class="fire-glow"></div>
-    <div class="battle-scene"></div>
-    <div class="smoke"></div>
-    <div class="explosion-glow"></div>
-    <div class="explosion-glow"></div>
-    <div class="scanline"></div>
-    <div class="noise"></div>
-    
+
+    <!-- 背景 -->
     <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
     </div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
 
     <div class="container">
-        <div class="card">
-            <div class="title-section">
-                <div class="title">
-                    <span>⚔️</span>
-                    <span>赵财期权末日轮策略</span>
-                    <span>🔥</span>
-                </div>
-                <p class="subtitle">试用版授权码申请</p>
-                <div class="motto">
-                    <span>定时重启</span>
-                    <span>·</span>
-                    <span>无限迭代</span>
-                    <span>·</span>
-                    <span>日益增进</span>
-                    <span class="spin-wrench">🔧</span>
-                </div>
-                <div class="live-clock">
-                    <span id="clockTime" class="clock-time">--:--:--</span>
-                    <span class="clock-label">北京时间</span>
-                </div>
+        <!-- Nav -->
+        <div class="nav">
+            <div class="nav-logo">⚔️ 赵财 · 末日轮情景分析</div>
+            <div class="nav-links">
+                <a href="#features">情景分析</a>
+                <a href="#pricing">定价</a>
+                <a href="#how">使用流程</a>
+                <a href="#risk">风险提示</a>
             </div>
+        </div>
 
-            <div id="alertBox" class="alert-box hidden">
-                <p class="alert-text">⚠️ 您已领取过试用码</p>
-                <div class="alert-content">
-                    <p class="alert-item">✅ 正式版核心权益：永久去水印 | 运行效率优化 | 持续功能更新</p>
-                    <p class="alert-item">🎁 限时福利：购买即赠卖方期权收租策略，一码通用</p>
-                    <p class="alert-item">⚠️ 试用版说明：后续将保持当前功能不再迭代</p>
-                    <p class="alert-item">💡 提改进意见被采纳，可享正式版专属购买优惠</p>
-                    <p class="alert-contact-info">购买联系：微信 <span class="alert-contact" onclick="copyWeChat()">zyzcfc</span> | QQ <span class="alert-contact" onclick="copyQQ2()">64743885</span></p>
-                </div>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-badge">🔥 限时免费试用</div>
+            <h1>赵财期权 · 末日轮情景分析</h1>
+            <p>手动调参 · 实时推演 · 多变量叠加<br>对标Wind/Bloomberg · 面向个人交易者</p>
+            <div class="hero-motto">
+                <span>像明日边缘一样，每次迭代都更强</span>
+                <span class="dot">·</span>
+                <span>从菜鸟到战神，战友陪你一起</span>
             </div>
-
-            <div class="input-group">
-                <label class="input-label">战友智大领峰用户名</label>
-                <input 
-                    type="text" 
-                    id="uid" 
-                    placeholder="输入战友智大领峰用户名"
-                    class="input-field"
-                    maxlength="50"
-                >
+            <div class="btn-wrap">
+                <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
+                    🚀 立即申请试用
+                </a>
             </div>
+        </div>
 
-            <button id="mainBtn" class="btn" onclick="go();">
-                <span>⚔️</span>
-                <span>申请授权码</span>
-                <span>⚔️</span>
-            </button>
-
-            <div id="result" class="result-section hidden">
-                <div class="code-box">
-                    <div class="code-header">
-                        <span class="code-label">授权码</span>
-                        <button id="copyBtn" class="copy-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <textarea id="code" class="code-textarea" readonly></textarea>
-                </div>
-
-                <div class="info-grid">
-                    <div class="info-box">
-                        <div class="info-label">战友智大领峰用户名</div>
-                        <div id="showUid" class="info-value"></div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">授权到期日</div>
-                        <div id="showExpire" class="info-value gold"></div>
-                    </div>
-                </div>
-
-                <div class="member-box">
-                    <p id="memberCount" class="member-text"></p>
-                </div>
-
-                <div id="dateLine" class="date-line hidden">
-                    <span class="date-label">授权申请日期</span>
-                    <span id="showDate" class="date-value"></span>
-                </div>
-
-                <div id="countdownBox" class="countdown-box hidden">
-                    <span class="countdown-label">距到期还有</span>
-                    <span id="countdownValue" class="countdown-value">-- 天</span>
-                </div>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">30天</div>
+                <div class="stat-label">天免费试用</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-number">🔥</div>
+                <div class="stat-label">功能强大</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">♾️</div>
+                <div class="stat-label">持续迭代</div>
+            </div>
+        </div>
 
-            <div class="link-section">
-                <div class="link-item">
-                    <span class="link-icon">💬</span>
-                    <span>QQ群：</span>
-                    <span onclick="copyQQ()" style="color: #ff6b35; cursor: pointer;">666181683</span>
+        <!-- Features -->
+        <div class="section" id="features">
+            <div style="text-align:center;margin-bottom:20px;">
+                <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank" style="display:inline-block;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);border-radius:10px;padding:10px 28px;font-size:17px;font-weight:700;color:#ff6b35;text-decoration:none;transition:all 0.3s;"
+                   onmouseover="this.style.background='rgba(255,107,53,0.25)';this.style.borderColor='rgba(255,107,53,0.5)';"
+                   onmouseout="this.style.background='rgba(255,107,53,0.12)';this.style.borderColor='rgba(255,107,53,0.25)';">📖 使用说明</a>
+                <br><br>
+                <a href="https://leader.tbquant.net/download" target="_blank" style="color:#ff6b35;text-decoration:none;font-size:15px;">📥 软件下载</a>
+                &nbsp;|&nbsp;
+                <a href="javascript:void(0)" onclick="showDownloadModal()" style="color:#ff6b35;text-decoration:none;font-size:15px;">📦 策略下载</a>
+            </div>
+            <h2 class="section-title">策略优势</h2>
+            <p class="section-sub">手动调参 · 实时推演 ·自动选合约 · 归一化比较 · 多变量叠加 · 化繁为简 · 效率拉满 · 细节拉满</p>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <div class="feature-title">手动调参</div>
+                    <div class="feature-desc">标的价格、隐含波动率、剩余天数，全可手动输入，自由组合推演。</div>
                 </div>
-                <div class="link-item">
-                    <span class="link-icon">📖</span>
-                    <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">腾讯文档 · 赵财末日轮主观策略使用说明书</a>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">实时推演</div>
+                    <div class="feature-desc">参数一改，理论价格、希腊字母、风险指标即时刷新，化繁为简效率拉满。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">自动选合约</div>
+                    <div class="feature-desc">任意到期日 × 任意实值/虚值/平值品种，一键匹配最优合约。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">三维一体看盘</div>
+                    <div class="feature-desc">标的价格/期权价格/隐含波动率，归一化百分位坐标比较，一眼看清机会。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">末日轮进化</div>
+                    <div class="feature-desc">像明日边缘电影主人公一样，每次循环都比上次更强。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-title">战友同行</div>
+                    <div class="feature-desc">QQ群老鸟带路，互相复盘，一起迭代升级。</div>
                 </div>
             </div>
         </div>
 
+        <!-- 三维一体看盘示意 -->
+        <div class="section" style="max-width:700px;margin:0 auto;">
+            <h2 class="section-title">三维一体看盘</h2>
+            <p class="section-sub">三个不同量纲的变量 → 归一化百分位坐标 → 背离一眼可见</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+                <div style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">📈</div>
+                    <div style="font-size:13px;color:#fff;font-weight:600;">标的价格</div>
+                    <div style="font-size:11px;color:#6b7280;">元 / 点位</div>
+                </div>
+                <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">💰</div>
+                    <div style="font-size:13px;color:#ffd700;font-weight:600;">期权价格</div>
+                    <div style="font-size:11px;color:#6b7280;">元 / 权利金</div>
+                </div>
+                <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">📊</div>
+                    <div style="font-size:13px;color:#22c55e;font-weight:600;">隐含波动率</div>
+                    <div style="font-size:11px;color:#6b7280;">百分比 %</div>
+                </div>
+            </div>
+            <div style="text-align:center;color:#6b7280;font-size:20px;margin-bottom:16px;">⬇️ 统一映射到 0-100 百分位坐标 ⬇️</div>
+            <div style="background:rgba(10,10,15,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;">
+                <div style="display:flex;align-items:flex-end;gap:12px;height:80px;padding:0 8px;">
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:78px;background:linear-gradient(to top,rgba(255,107,53,0.3),rgba(255,107,53,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;">高位</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">标的价 65%</div>
+                    </div>
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:12px;background:linear-gradient(to top,rgba(255,215,0,0.3),rgba(255,215,0,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#ffd700;">极低</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">期权价 8%</div>
+                    </div>
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:10px;background:linear-gradient(to top,rgba(34,197,94,0.3),rgba(34,197,94,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#22c55e;">极低</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">IV 5%</div>
+                    </div>
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
+                    <span style="color:#ff6b35;font-size:14px;font-weight:600;">⚠️ 背离信号：标的在高位，期权和IV却在极低位 → 定价扭曲</span>
+                </div>
+            </div>
+            <p style="text-align:center;color:#6b7280;font-size:12px;margin-top:12px;">
+                传统看盘三张图割裂，背离信号全靠猜。三维一体直接可视化，一眼看清定价是否合理。
+            </p>
+        </div>
+
+        <!-- 自动选合约 -->
+        <div class="section" style="max-width:700px;margin:0 auto;">
+            <h2 class="section-title">自动选合约</h2>
+            <p class="section-sub">任意到期日 × 任意实值/虚值/平值 → 一键匹配最优合约</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;">
+                    <div style="font-size:13px;color:#ff6b35;font-weight:600;margin-bottom:8px;">❌ 手动筛选</div>
+                    <div style="font-size:12px;color:#9ca3af;line-height:1.8;">
+                        两个方向 × N个行权价 × N个到期日<br>
+                        → 海量合约，逐个翻阅<br>
+                        → 眼花缭乱，容易漏掉最优
+                    </div>
+                </div>
+                <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:20px;">
+                    <div style="font-size:13px;color:#22c55e;font-weight:600;margin-bottom:8px;">✅ 自动选合约</div>
+                    <div style="font-size:12px;color:#9ca3af;line-height:1.8;">
+                        设定到期日 + 实虚平值偏好<br>
+                        → 一键锁定虚一档 C/P<br>
+                        → 永远站在最优起跑线
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="section" id="how">
+            <h2 class="section-title">两步获取授权码</h2>
+            <p class="section-sub">简单两步，即刻开始使用</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-title">填写信息</div>
+                    <div class="step-desc">提交你的智大领峰账号和联系方式</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-title">获取授权码</div>
+                    <div class="step-desc">一键生成30天试用码，复制后在智大领峰中激活</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk -->
+        <div class="section" id="risk">
+            <h2 class="section-title">风险提示</h2>
+            <p class="section-sub">投资有风险，入市需谨慎</p>
+            <div class="risk-box">
+                <div class="risk-title">⚠️ 重要声明</div>
+                <ul class="risk-list">
+                    <li>期权交易属于高风险投资，末日轮行情波动极大，可能导致本金全部损失</li>
+                    <li>请务必使用闲余资金参与，切勿借贷投资</li>
+                    <li>本人仅分享策略思路，不提供任何形式的交易指导、喊单或带单服务</li>
+                    <li>本人不会以任何理由主动添加你的微信或QQ</li>
+                    <li>任何冒充赵财名义收费的行为均属诈骗，请直接拉黑举报</li>
+                    <li>提交申请即视为已知晓以上风险，所有交易决策由你自行承担，盈亏自负</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Soul Quote -->
+        <div class="section" style="text-align:center; max-width: 700px; margin: 0 auto; padding: 20px 0 0;">
+            <p style="font-size:15px; color:#6b7280; line-height:1.8; font-style:italic; border-left:3px solid rgba(255,107,53,0.3); padding-left:24px;">
+                像明日边缘里的凯奇一样，我们都在末日轮里定时重启。<br>
+                但每一次重启，都离胜利更近一步。<br>
+                战友在侧，策略在手，干就完了。
+            </p>
+        </div>
+
+        <!-- Pricing -->
+        <div class="section" id="pricing">
+            <h2 class="section-title">定价</h2>
+            <p class="section-sub">对标Wind/Bloomberg · 面向个人交易者</p>
+            <div class="pricing">
+                <div class="pricing-compare">
+                    <div class="pricing-compare-label">机构级终端</div>
+                    <div class="price-high">Wind / Bloomberg · 年费数万+</div>
+                    <div class="arrow-down">👇</div>
+                    <div class="price-low">免费试用30天</div>
+                    <div class="price-label">体验全部功能，不满意不付费</div>
+                </div>
+                <div class="pricing-rows">
+                    <div class="pricing-row">
+                        <div class="pricing-row-left">
+                            <div class="pricing-row-name">📅 月度</div>
+                            <div class="pricing-row-original">原价 <s>￥189</s></div>
+                        </div>
+                        <div>
+                            <span class="pricing-row-price">￥89</span>
+                            <span class="pricing-row-badge">🔥 限时</span>
+                        </div>
+                    </div>
+                    <div class="pricing-row">
+                        <div class="pricing-row-left">
+                            <div class="pricing-row-name">📆 年度</div>
+                            <div class="pricing-row-original">原价 <s>￥1999</s> · 日均≈￥2.7</div>
+                        </div>
+                        <div>
+                            <span class="pricing-row-price">￥999</span>
+                            <span class="pricing-row-badge">🔥 限时</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-note">
+                    💡 对一个20万+账户的活跃交易者，一次因忽视波动率风险的意外亏损可能达数千元。<br>
+                    每天一杯咖啡的钱，给自己多一份决策底气。
+                </div>
+                <div style="text-align:center;margin-top:24px;">
+                    <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
+                        🚀 立即申请试用
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <div class="footer">
-            <span>💪</span>
-            <span>末日边缘 搞钱联盟</span>
-            <span class="spin-wrench">🔧</span>
+            <p>赵财期权 · 末日轮情景分析 © 2026 &nbsp;|&nbsp; QQ群: <span onclick="copyQQ()" style="color:#ff6b35;cursor:pointer;">666181683</span></p>
+            <p style="margin-top:8px;">
+                <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#999; text-decoration:none;font-size:12px;">
+                    冀ICP备2026017437号-1
+                </a>
+            </p>
         </div>
     </div>
 
-    
+    <!-- 申请弹窗 - 联系表单 -->
+    <div id="applyModal" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-icon" id="modalIcon">📝</div>
+            <div class="modal-title" id="modalTitle">申请试用授权码</div>
+            <div class="modal-desc" id="modalDesc">
+                请填写您的联系方式，提交后自动跳转到授权码生成页面 🚀
+            </div>
+
+            <!-- 联系表单 -->
+            <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="form-group">
+                    <label><span class="required">*</span> QQ / 微信 <span style="font-weight:normal;color:#6b7280;font-size:12px;">（如没有QQ可留微信）</span></label>
+                    <input type="text" id="formWechat" class="form-input" placeholder="请输入您的QQ或微信号" required>
+                    <div class="form-error" id="errWechat">请填写QQ或微信号</div>
+                </div>
+                <div class="form-group">
+                    <label><span class="required">*</span> 智大领峰账号</label>
+                    <input type="text" id="formUID" class="form-input" placeholder="请输入您的智大领峰账号（UID）" required>
+                    <div class="form-error" id="errUID">请输入智大领峰账号</div>
+                </div>
+                <button type="submit" id="submitBtn" class="form-submit">
+                    <span class="spinner"></span>
+                    <span class="btn-text">🚀 提交并获取授权码</span>
+                </button>
+                <div class="form-success" id="formSuccess">✅ 提交成功！正在跳转...</div>
+                <div class="form-error" id="formError"></div>
+            </form>
+
+            <br>
+            <button class="modal-close" onclick="closeModal()">稍后再说</button>
+        </div>
+    </div>
+
+    <!-- 策略下载弹窗 -->
+    <div id="downloadModal" class="modal-overlay hidden" onclick="closeDownloadModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-icon">📦</div>
+            <div class="modal-title">策略下载</div>
+            <div class="modal-desc">
+                下载链接及密码如下 👇
+            </div>
+            <a href="https://wwbbw.lanzouv.com/b02sgmm0uh" target="_blank" class="modal-link">
+                🔗 点击下载策略
+            </a>
+            <div style="margin-top:12px;font-size:14px;color:#ffd700;">
+                🔑 密码：<span style="font-weight:bold;font-size:18px;">9j4r</span>
+            </div>
+            <br>
+            <button class="modal-close" onclick="closeDownloadModal()">关闭</button>
+        </div>
+    </div>
+
     <script>
-        console.log('=== JS 脚本开始加载 ===');
-        
-        // === Keyboard protection ===
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                var target = e.target || e.srcElement;
-                var isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
-                if (!isInput) {
-                    switch(e.key.toLowerCase()) {
-                        case 'c': case 's': case 'v': case 'x': case 'u': case 'i':
-                            e.preventDefault();
-                            break;
-                    }
-                }
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-            }
-        });
-        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+        // ===== 云函数 API 地址（部署后替换为实际地址）=====
+        var API_BASE = 'https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com';
 
-        // === Live Clock ===
-        function updateClock() {
-            let n=new Date();
-            document.getElementById('clockTime').textContent=
-                String(n.getHours()).padStart(2,'0')+':'+
-                String(n.getMinutes()).padStart(2,'0')+':'+
-                String(n.getSeconds()).padStart(2,'0');
-        }
-        setInterval(updateClock,1000); updateClock();
-
-        // === Countdown ===
-        let tmr=null;
-        function startCountdown(e){
-            if(tmr)clearInterval(tmr);
-            let d=new Date(e+'T23:59:59+08:00');
-            function tick(){
-                let df=d-new Date();
-                if(df<=0){document.getElementById('countdownValue').textContent='已到期';return}
-                document.getElementById('countdownValue').textContent=
-                    Math.floor(df/86400000)+' 天 '+
-                    Math.floor((df%86400000)/3600000)+' 时 '+
-                    Math.floor((df%3600000)/60000)+' 分';
-            }
-            tick(); tmr=setInterval(tick,60000);
+        function showApplyModal() {
+            document.getElementById('applyModal').classList.remove('hidden');
+            // 重置表单
+            document.getElementById('contactForm').reset();
+            document.getElementById('formSuccess').classList.remove('show');
+            document.getElementById('formError').classList.remove('show');
+            document.getElementById('formError').textContent = '';
         }
 
-        // === Date Line ===
-        function showDateLine(exp){
-            let d=new Date(exp+'T00:00:00+08:00');
-            d.setDate(d.getDate()-30);
-            document.getElementById('showDate').textContent=
-                d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-            startCountdown(exp);
-        }
-
-        function hideFormAndShowDate(exp){
-            // 老用户：隐藏输入框和按钮，但保留授权码展示
-            document.querySelector('.input-group').classList.add('hidden');
-            document.getElementById('mainBtn').classList.add('hidden');
-            document.getElementById('dateLine').classList.remove('hidden');
-            document.getElementById('countdownBox').classList.remove('hidden');
-            showDateLine(exp);
-        }
-
-        // === Auth Core ===
-        const CoreSecret = 8801088;
-        const mapTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-        const TRIAL_DAYS = 30;
-        const USED_ACCOUNTS_KEY = 'zhaocai_used_accounts';
-        const ACCOUNT_CODES_KEY = 'zhaocai_account_codes';
-        const BYPASS_UIDS = ['ZCCFZY', 'TEST001', 'TEST002', 'TEST003'];
-
-        function formatDate(date) {
-            let year = date.getFullYear();
-            let month = String(date.getMonth() + 1).padStart(2, '0');
-            let day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
-        function getExpireNum(date) {
-            let year = date.getFullYear();
-            let month = String(date.getMonth() + 1).padStart(2, '0');
-            let day = String(date.getDate()).padStart(2, '0');
-            return parseInt(year + month + day);
-        }
-
-        function getUsedAccounts() {
-            return JSON.parse(localStorage.getItem(USED_ACCOUNTS_KEY) || '[]');
-        }
-
-        function getAccountCodes() {
-            let data = JSON.parse(localStorage.getItem(ACCOUNT_CODES_KEY) || '{}');
-            return data;
-        }
-
-        function getAccountCode(uid) {
-            let codes = getAccountCodes();
-            return codes[uid] || null;
-        }
-
-        // 说明：历史版本把 userNum 误命名成 uidSum，这里修正为 userNum（同时保持兼容读取）
-        function saveAccountCode(uid, code, userNum, expireDate, expireNum) {
-            let accountCodes = getAccountCodes();
-            accountCodes[uid] = { code: code, userNum: userNum, time: Date.now(), expireDate: expireDate, expireNum: expireNum };
-            localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
-        }
-
-        function saveUsedAccount(uid) {
-            let usedAccounts = getUsedAccounts();
-            if (!usedAccounts.includes(uid)) {
-                usedAccounts.push(uid);
-                localStorage.setItem(USED_ACCOUNTS_KEY, JSON.stringify(usedAccounts));
+        function closeModal(e) {
+            if (!e || e.target === e.currentTarget || e.type === 'click') {
+                document.getElementById('applyModal').classList.add('hidden');
             }
         }
 
-        function isAccountUsed(uid) {
-            return getUsedAccounts().includes(uid);
-        }
+        // ===== 表单提交 =====
+        function submitContact(e) {
+            e.preventDefault();
 
-        function calculateSerial(uid, expireNum) {
-            let uidSum = 0;
-            for (let i = 1; i < uid.length; i++) {
-                let c = uid[i];
-                let v = mapTable.indexOf(c) + 1;
-                uidSum += v;
+            var wechat = document.getElementById('formWechat').value.trim();
+            var uid = document.getElementById('formUID').value.trim();
+
+            // 隐藏所有错误
+            document.querySelectorAll('.form-error').forEach(function(el) { el.classList.remove('show'); });
+
+            // 验证
+            var hasError = false;
+            if (!wechat) {
+                document.getElementById('errWechat').classList.add('show');
+                hasError = true;
             }
-            uidSum += 1;
-            
-            let salt = uidSum * 10000 + CoreSecret;
-            let v1 = expireNum * 3 + CoreSecret + salt;
-            let v2 = expireNum + salt + CoreSecret + 99999;
-            let serial = "1" + v1 + CoreSecret + v2;
-            
-            return { serial: serial, uidSum: uidSum };
-        }
-
-        async function go() {
-            let inputField = document.getElementById("uid");
-            let uid = inputField.value.toUpperCase().trim();
-            let alertBox = document.getElementById("alertBox");
-            let btn = document.getElementById("mainBtn");
-            
             if (!uid) {
-                inputField.classList.add("shake");
-                setTimeout(() => inputField.classList.remove("shake"), 500);
-                return;
+                document.getElementById('errUID').classList.add('show');
+                hasError = true;
             }
-            
-            let isBypass = BYPASS_UIDS.includes(uid);
-            
-            btn.disabled = true;
-            btn.innerHTML = '<span>⚔️</span><span>处理中...</span><span>⚔️</span>';
-            
-            try {
-                let response = await fetch('https://1328173883-3c94bpyyze.ap-shanghai.tencentscf.com', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ uid: uid }),
-                    cache: 'no-cache'
-                });
-                
-                if (!response.ok) {
-                    throw new Error('HTTP错误: ' + response.status);
-                }
-                
-                let data = await response.json();
-                
-                if (!data || typeof data !== 'object') {
-                    throw new Error('响应数据无效');
-                }
-                
-                if (data.success) {
-                    alertBox.classList.add("hidden");
-                    if (!isBypass) {
-                        saveUsedAccount(uid); // 不在绕过列表才保存记录
-                        saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
-                    }
-                    
-                    document.getElementById("code").value = data.data.code;
-                    document.getElementById("showUid").innerText = uid;
-                    document.getElementById("showExpire").innerText = data.data.expire;
-                    if (data.data.totalUsers) {
-                        document.getElementById("memberCount").innerText = '💪 当前共有 ' + data.data.totalUsers + ' 位战友！ 🕶️';
-                    } else {
-                        document.getElementById("memberCount").innerText = '';
-                    }
-                    document.getElementById("result").classList.remove("hidden");
-                } else {
-                    if (data.hasHistory && data.data) {
-                        if (!isBypass) {
-                            saveUsedAccount(uid); // 不在绕过列表才保存记录
-                            saveAccountCode(uid, data.data.code, data.data.userNum, data.data.expire, getExpireNum(new Date(data.data.expire)));
-                        }
-                        
-                        alertBox.classList.remove("hidden"); // 显示提示框
-                        
-                        // 显示历史记录
-                        document.getElementById("code").value = data.data.code;
-                        document.getElementById("showUid").innerText = uid;
-                        document.getElementById("showExpire").innerText = data.data.expire;
-                        if (data.data.totalUsers) {
-                            document.getElementById("memberCount").innerText = '💪 当前共有 ' + data.data.totalUsers + ' 位战友！ 🕶️';
-                        } else {
-                            document.getElementById("memberCount").innerText = '';
-                        }
-                        document.getElementById("result").classList.remove("hidden");
-                        
-                        if (!isBypass) hideFormAndShowDate(data.data.expire); // 不在绕过列表才隐藏表单
-                    } else {
-                        if (isBypass) {
-                            // 绕过用户（应该不会走到这里，因为云函数处理了）
-                            alertBox.classList.add("hidden");
-                        } else {
-                            alertBox.classList.remove("hidden");
-                        }
-                    }
-                }
-                
-            } catch (error) {
-                let existing = getAccountCode(uid);
-                if (existing) {
-                    document.getElementById("code").value = existing.code;
-                    document.getElementById("showUid").innerText = uid;
-                    document.getElementById("showExpire").innerText = existing.expireDate;
-                    const localUserNum = (existing.userNum || existing.uidSum || '?');
-                    document.getElementById("memberCount").innerText = '💪 你是第 ' + localUserNum + ' 位战友，你并不孤单！ 🕶️';
-                    document.getElementById("result").classList.remove("hidden");
-                    alertBox.classList.add("hidden");
-                    if (!isBypass) hideFormAndShowDate(existing.expireDate);
-                }
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<span>⚔️</span><span>申请授权码</span><span>⚔️</span>';
-            }
-        }
+            if (hasError) return;
 
-        function copyCode() {
-            let code = document.getElementById("code").value;
-            let btn = document.getElementById("copyBtn");
-            
-            navigator.clipboard.writeText(code).then(() => {
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                btn.classList.add("success");
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    btn.classList.remove("success");
-                }, 2000);
-            }).catch(() => {
-                // Fallback for file:// protocol
-                var textarea = document.createElement("textarea");
-                textarea.value = code;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textarea);
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                btn.classList.add("success");
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    btn.classList.remove("success");
-                }, 2000);
-            });
+            // 显示加载状态
+            var btn = document.getElementById('submitBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            // 提交到云函数
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', API_BASE, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.timeout = 15000;
+
+            xhr.onload = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+
+                if (xhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.success) {
+                            // 联系方式已保存 → 直接调用云函数生成授权码
+                            document.getElementById('modalIcon').textContent = '⏳';
+                            document.getElementById('modalTitle').textContent = '正在生成授权码...';
+                            document.getElementById('modalDesc').textContent = '';
+                            document.getElementById('formSuccess').classList.add('show');
+                            document.getElementById('contactForm').style.display = 'none';
+
+                            var xhr2 = new XMLHttpRequest();
+                            xhr2.open('POST', API_BASE, true);
+                            xhr2.setRequestHeader('Content-Type', 'application/json');
+                            xhr2.timeout = 15000;
+
+                            xhr2.onload = function() {
+                                if (xhr2.status === 200) {
+                                    try {
+                                        var result = JSON.parse(xhr2.responseText);
+                                        if (result.success) {
+                                            var code = result.data.code;
+                                            document.getElementById('modalIcon').textContent = '';
+                                            document.getElementById('modalTitle').textContent = '';
+                                            document.getElementById('modalDesc').innerHTML =
+                                                // 授权码框
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
+                                                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+                                                '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
+                                                '<button onclick="copyCodeStr(\'' + code + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">' +
+                                                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code + '</textarea></div>' +
+                                                // 信息网格
+                                                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">战友智大领峰用户名</div>' +
+                                                '<div style="font-size:14px;color:#fff;">' + result.data.uid + '</div></div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">授权到期日</div>' +
+                                                '<div style="font-size:14px;color:#ffd700;font-weight:bold;">' + result.data.expire + '</div></div></div>' +
+                                                // 战友数
+                                                '<div style="background:linear-gradient(90deg,rgba(255,107,53,0.2),rgba(220,38,38,0.2));border:1px solid rgba(255,107,53,0.3);border-radius:12px;padding:12px;text-align:center;margin-bottom:8px;">' +
+                                                '<span style="color:#ffd700;font-size:14px;">💪 当前共有 ' + result.data.totalUsers + ' 位战友！ 🕶️</span></div>';
+                                        } else if (result.hasHistory && result.data) {
+                                            var code2 = result.data.code;
+                                            document.getElementById('modalIcon').textContent = '';
+                                            document.getElementById('modalTitle').textContent = '';
+                                            document.getElementById('modalDesc').innerHTML =
+                                                '<div style="text-align:center;margin-bottom:8px;color:#ef4444;font-size:13px;">⚠️ 您已领取过试用码</div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
+                                                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+                                                '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
+                                                '<button onclick="copyCodeStr(\'' + code2 + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">' +
+                                                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code2 + '</textarea></div>' +
+                                                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">战友智大领峰用户名</div>' +
+                                                '<div style="font-size:14px;color:#fff;">' + result.data.uid + '</div></div>' +
+                                                '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
+                                                '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">授权到期日</div>' +
+                                                '<div style="font-size:14px;color:#ffd700;font-weight:bold;">' + result.data.expire + '</div></div></div>' +
+                                                '<div style="font-size:11px;color:#6b7280;text-align:center;">💡 提改进意见被采纳，可享正式版专属购买优惠</div>' +
+                                                '<div style="font-size:12px;color:#ffd700;text-align:center;margin-top:8px;">购买联系：微信 zyzcfc | QQ 64743885</div>';
+                                        } else {
+                                            document.getElementById('modalDesc').innerHTML =
+                                                '<div style="color:#ef4444;">生成失败：' + (result.message || '未知错误') + '</div>';
+                                        }
+                                    } catch (e) {
+                                        document.getElementById('modalDesc').innerHTML =
+                                            '<div style="color:#ef4444;">解析结果失败，请重试</div>';
+                                    }
+                                } else {
+                                    document.getElementById('modalDesc').innerHTML =
+                                        '<div style="color:#ef4444;">网络错误，请重试</div>';
+                                }
+                            };
+                            xhr2.onerror = function() {
+                                document.getElementById('modalDesc').innerHTML =
+                                    '<div style="color:#ef4444;">网络连接失败，请重试</div>';
+                            };
+                            xhr2.send(JSON.stringify({ uid: uid }));
+                        } else {
+                            document.getElementById('formError').textContent = resp.message || '提交失败，请重试';
+                            document.getElementById('formError').classList.add('show');
+                        }
+                    } catch (err) {
+                        document.getElementById('formError').textContent = '服务器响应异常，请重试';
+                        document.getElementById('formError').classList.add('show');
+                    }
+                } else {
+                    document.getElementById('formError').textContent = '网络错误（' + xhr.status + '），请重试';
+                    document.getElementById('formError').classList.add('show');
+                }
+            };
+
+            xhr.onerror = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                document.getElementById('formError').textContent = '网络连接失败，请检查网络后重试';
+                document.getElementById('formError').classList.add('show');
+            };
+
+            xhr.ontimeout = function() {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                document.getElementById('formError').textContent = '请求超时，请重试';
+                document.getElementById('formError').classList.add('show');
+            };
+
+            // 发送 contact 数据
+            xhr.send(JSON.stringify({
+                action: 'contact',
+                wechat: wechat,
+                uid: uid
+            }));
         }
 
         function copyQQ() {
             navigator.clipboard.writeText("666181683");
         }
-        function copyQQ2() {
-            navigator.clipboard.writeText("64743885");
-        }
-        function copyWeChat() {
-            navigator.clipboard.writeText("zyzcfc");
+
+        function copyCodeStr(code, btn) {
+            navigator.clipboard.writeText(code).then(function() {
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(function() {
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                }, 2000);
+            });
         }
 
-        // 页面加载完成后绑定事件
-        window.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('copyBtn').addEventListener('click', copyCode);
-            
-            // 清除绕过 UID 的历史记录，确保它们可以重新申请
-            let usedAccounts = getUsedAccounts();
-            let accountCodes = getAccountCodes();
-            let modified = false;
-            
-            BYPASS_UIDS.forEach(uid => {
-                if (usedAccounts.includes(uid)) {
-                    usedAccounts = usedAccounts.filter(u => u !== uid);
-                    modified = true;
-                }
-                if (accountCodes[uid]) {
-                    delete accountCodes[uid];
-                    modified = true;
-                }
-            });
-            
-            if (modified) {
-                localStorage.setItem(USED_ACCOUNTS_KEY, JSON.stringify(usedAccounts));
-                localStorage.setItem(ACCOUNT_CODES_KEY, JSON.stringify(accountCodes));
+        function showDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('hidden');
+        }
+        function closeDownloadModal(e) {
+            if (!e || e.target === e.currentTarget || e.type === 'click') {
+                document.getElementById('downloadModal').classList.add('hidden');
             }
+        }
+
+        // ESC关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeModal(); closeDownloadModal(); }
         });
     </script>
-</body>
-</html>
+
+
+
+</body></html>

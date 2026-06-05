@@ -118,7 +118,7 @@
         /* ===== Hero ===== */
         .hero {
             text-align: center;
-            padding: 60px 0 40px;
+            padding: 20px 0 30px;
             animation: fadeUp 0.8s ease-out;
         }
         @keyframes fadeUp {
@@ -133,7 +133,7 @@
             padding: 6px 16px;
             font-size: 12px;
             color: #ff6b35;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         .hero h1 {
             font-size: 42px;
@@ -156,7 +156,7 @@
             display: flex;
             justify-content: center;
             gap: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-size: 14px;
             color: #6b7280;
         }
@@ -190,26 +190,6 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 35px rgba(255, 107, 53, 0.6);
         }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
-            padding: 18px 36px;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
-            margin-left: 12px;
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-
         .btn-wrap {
             display: flex;
             justify-content: center;
@@ -223,7 +203,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             max-width: 600px;
-            margin: 40px auto;
+            margin: 30px auto;
         }
         .stat-card {
             background: rgba(255, 255, 255, 0.03);
@@ -248,7 +228,7 @@
 
         /* ===== Sections ===== */
         .section {
-            padding: 60px 0;
+            padding: 30px 0;
             animation: fadeUp 0.8s ease-out;
         }
         .section-title {
@@ -275,15 +255,14 @@
             .stats { grid-template-columns: 1fr; }
             .hero h1 { font-size: 28px; }
             .hero p { font-size: 15px; padding: 0 10px; }
-            .hero { padding: 30px 0 20px; }
+            .hero { padding: 20px 0 30px; }
             .hero-motto { flex-wrap: wrap; gap: 8px; font-size: 12px; }
             .btn-primary { padding: 16px 24px; font-size: 16px; width: 100%; }
-            .btn-secondary { margin-left: 0; width: 100%; text-align: center; }
             .btn-wrap { flex-direction: column; gap: 10px; }
             .nav-links { gap: 12px; font-size: 12px; }
-            .nav { margin-bottom: 20px; }
+            .nav { margin-bottom: 30px; }
             .container { padding: 12px; }
-            .section { padding: 30px 0; }
+            .section { padding: 20px 0; }
             .section-title { font-size: 22px; }
             .stat-number { font-size: 22px; }
             .stat-card { padding: 14px; }
@@ -293,8 +272,6 @@
             .modal-title { font-size: 18px; }
             .modal-link { width: 100%; text-align: center; padding: 14px 20px; }
             .step { padding: 16px 12px; }
-            .cta { padding: 30px 0; }
-            .cta h2 { font-size: 22px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 22px; }
@@ -337,11 +314,11 @@
         /* ===== How it works ===== */
         .steps {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
         @media (max-width: 768px) {
-            .steps { grid-template-columns: 1fr 1fr; }
+            .steps { grid-template-columns: 1fr; }
         }
         .step {
             text-align: center;
@@ -509,22 +486,6 @@
             color: #6b7280;
             margin-top: 16px;
             line-height: 1.6;
-        }
-
-        /* ===== CTA ===== */
-        .cta {
-            text-align: center;
-            padding: 60px 0;
-            border-top: 1px solid rgba(255, 107, 53, 0.1);
-        }
-        .cta h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .cta p {
-            color: #6b7280;
-            margin-bottom: 24px;
         }
 
         /* ===== Footer ===== */
@@ -710,10 +671,10 @@
         <div class="nav">
             <div class="nav-logo">⚔️ 赵财 · 末日轮情景分析</div>
             <div class="nav-links">
-                <a href="https://zccfzy.github.io/zhaocai-auth/index.html#features">情景分析</a>
-                <a href="https://zccfzy.github.io/zhaocai-auth/index.html#pricing">定价</a>
-                <a href="https://zccfzy.github.io/zhaocai-auth/index.html#how">使用流程</a>
-                <a href="https://zccfzy.github.io/zhaocai-auth/index.html#risk">风险提示</a>
+                <a href="#features">情景分析</a>
+                <a href="#pricing">定价</a>
+                <a href="#how">使用流程</a>
+                <a href="#risk">风险提示</a>
             </div>
         </div>
 
@@ -730,9 +691,6 @@
             <div class="btn-wrap">
                 <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
                     🚀 立即申请试用
-                </a>
-                <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank" class="btn-secondary">
-                    📖 使用说明
                 </a>
             </div>
         </div>
@@ -755,6 +713,15 @@
 
         <!-- Features -->
         <div class="section" id="features">
+            <div style="text-align:center;margin-bottom:20px;">
+                <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank" style="display:inline-block;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);border-radius:10px;padding:10px 28px;font-size:17px;font-weight:700;color:#ff6b35;text-decoration:none;transition:all 0.3s;"
+                   onmouseover="this.style.background='rgba(255,107,53,0.25)';this.style.borderColor='rgba(255,107,53,0.5)';"
+                   onmouseout="this.style.background='rgba(255,107,53,0.12)';this.style.borderColor='rgba(255,107,53,0.25)';">📖 使用说明</a>
+                <br><br>
+                <a href="https://leader.tbquant.net/download" target="_blank" style="color:#ff6b35;text-decoration:none;font-size:15px;">📥 软件下载</a>
+                &nbsp;|&nbsp;
+                <a href="javascript:void(0)" onclick="showDownloadModal()" style="color:#ff6b35;text-decoration:none;font-size:15px;">📦 策略下载</a>
+            </div>
             <h2 class="section-title">策略优势</h2>
             <p class="section-sub">手动调参 · 实时推演 ·自动选合约 · 归一化比较 · 多变量叠加 · 化繁为简 · 效率拉满 · 细节拉满</p>
             <div class="features">
@@ -791,10 +758,80 @@
             </div>
         </div>
 
+        <!-- 三维一体看盘示意 -->
+        <div class="section" style="max-width:700px;margin:0 auto;">
+            <h2 class="section-title">三维一体看盘</h2>
+            <p class="section-sub">三个不同量纲的变量 → 归一化百分位坐标 → 背离一眼可见</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+                <div style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">📈</div>
+                    <div style="font-size:13px;color:#fff;font-weight:600;">标的价格</div>
+                    <div style="font-size:11px;color:#6b7280;">元 / 点位</div>
+                </div>
+                <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">💰</div>
+                    <div style="font-size:13px;color:#ffd700;font-weight:600;">期权价格</div>
+                    <div style="font-size:11px;color:#6b7280;">元 / 权利金</div>
+                </div>
+                <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:16px;text-align:center;">
+                    <div style="font-size:20px;margin-bottom:4px;">📊</div>
+                    <div style="font-size:13px;color:#22c55e;font-weight:600;">隐含波动率</div>
+                    <div style="font-size:11px;color:#6b7280;">百分比 %</div>
+                </div>
+            </div>
+            <div style="text-align:center;color:#6b7280;font-size:20px;margin-bottom:16px;">⬇️ 统一映射到 0-100 百分位坐标 ⬇️</div>
+            <div style="background:rgba(10,10,15,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;">
+                <div style="display:flex;align-items:flex-end;gap:12px;height:80px;padding:0 8px;">
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:78px;background:linear-gradient(to top,rgba(255,107,53,0.3),rgba(255,107,53,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;">高位</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">标的价 65%</div>
+                    </div>
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:12px;background:linear-gradient(to top,rgba(255,215,0,0.3),rgba(255,215,0,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#ffd700;">极低</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">期权价 8%</div>
+                    </div>
+                    <div style="flex:1;text-align:center;">
+                        <div style="height:10px;background:linear-gradient(to top,rgba(34,197,94,0.3),rgba(34,197,94,0.8));border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#22c55e;">极低</div>
+                        <div style="font-size:10px;color:#6b7280;margin-top:4px;">IV 5%</div>
+                    </div>
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
+                    <span style="color:#ff6b35;font-size:14px;font-weight:600;">⚠️ 背离信号：标的在高位，期权和IV却在极低位 → 定价扭曲</span>
+                </div>
+            </div>
+            <p style="text-align:center;color:#6b7280;font-size:12px;margin-top:12px;">
+                传统看盘三张图割裂，背离信号全靠猜。三维一体直接可视化，一眼看清定价是否合理。
+            </p>
+        </div>
+
+        <!-- 自动选合约 -->
+        <div class="section" style="max-width:700px;margin:0 auto;">
+            <h2 class="section-title">自动选合约</h2>
+            <p class="section-sub">任意到期日 × 任意实值/虚值/平值 → 一键匹配最优合约</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;">
+                    <div style="font-size:13px;color:#ff6b35;font-weight:600;margin-bottom:8px;">❌ 手动筛选</div>
+                    <div style="font-size:12px;color:#9ca3af;line-height:1.8;">
+                        两个方向 × N个行权价 × N个到期日<br>
+                        → 海量合约，逐个翻阅<br>
+                        → 眼花缭乱，容易漏掉最优
+                    </div>
+                </div>
+                <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:20px;">
+                    <div style="font-size:13px;color:#22c55e;font-weight:600;margin-bottom:8px;">✅ 自动选合约</div>
+                    <div style="font-size:12px;color:#9ca3af;line-height:1.8;">
+                        设定到期日 + 实虚平值偏好<br>
+                        → 一键锁定虚一档 C/P<br>
+                        → 永远站在最优起跑线
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- How it works -->
         <div class="section" id="how">
-            <h2 class="section-title">三步获取授权码</h2>
-            <p class="section-sub">简单三步，即刻开始使用</p>
+            <h2 class="section-title">两步获取授权码</h2>
+            <p class="section-sub">简单两步，即刻开始使用</p>
             <div class="steps">
                 <div class="step">
                     <div class="step-num">1</div>
@@ -804,20 +841,8 @@
                 </div>
                 <div class="step">
                     <div class="step-num">2</div>
-                    <div class="step-title">自动跳转</div>
-                    <div class="step-desc">提交后自动跳转到授权码生成页面</div>
-                    <div class="step-arrow">→</div>
-                </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <div class="step-title">生成授权码</div>
-                    <div class="step-desc">输入账户名，一键生成30天试用码</div>
-                    <div class="step-arrow">→</div>
-                </div>
-                <div class="step">
-                    <div class="step-num">4</div>
-                    <div class="step-title">激活使用</div>
-                    <div class="step-desc">复制授权码，在智大领峰中激活即可使用</div>
+                    <div class="step-title">获取授权码</div>
+                    <div class="step-desc">一键生成30天试用码，复制后在智大领峰中激活</div>
                 </div>
             </div>
         </div>
@@ -886,25 +911,22 @@
                     💡 对一个20万+账户的活跃交易者，一次因忽视波动率风险的意外亏损可能达数千元。<br>
                     每天一杯咖啡的钱，给自己多一份决策底气。
                 </div>
-            </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="cta">
-            <h2>准备好了吗？</h2>
-            <p>免费试用30天，体验赵财期权情景分析系统</p>
-            <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
-                🚀 立即申请试用
-            </a>
-            <div style="margin-top: 16px; font-size: 13px; color: #6b7280;">
-                QQ群：<span onclick="copyQQ()" style="color:#ff6b35;cursor:pointer;">666181683</span>
-                &nbsp;|&nbsp; 遇到问题群里交流
+                <div style="text-align:center;margin-top:24px;">
+                    <a href="javascript:void(0)" onclick="showApplyModal()" class="btn-primary">
+                        🚀 立即申请试用
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>赵财期权 · 末日轮情景分析 © 2026 &nbsp;|&nbsp; <a href="https://docs.qq.com/doc/DQ3RsSHpPV1hQTmdp" target="_blank">使用说明书</a> &nbsp;|&nbsp; QQ群: 666181683</p>
+            <p>赵财期权 · 末日轮情景分析 © 2026 &nbsp;|&nbsp; QQ群: <span onclick="copyQQ()" style="color:#ff6b35;cursor:pointer;">666181683</span></p>
+            <p style="margin-top:8px;">
+                <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#999; text-decoration:none;font-size:12px;">
+                    冀ICP备2026017437号-1
+                </a>
+            </p>
         </div>
     </div>
 
@@ -939,6 +961,25 @@
 
             <br>
             <button class="modal-close" onclick="closeModal()">稍后再说</button>
+        </div>
+    </div>
+
+    <!-- 策略下载弹窗 -->
+    <div id="downloadModal" class="modal-overlay hidden" onclick="closeDownloadModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-icon">📦</div>
+            <div class="modal-title">策略下载</div>
+            <div class="modal-desc">
+                下载链接及密码如下 👇
+            </div>
+            <a href="https://wwbbw.lanzouv.com/b02sgmm0uh" target="_blank" class="modal-link">
+                🔗 点击下载策略
+            </a>
+            <div style="margin-top:12px;font-size:14px;color:#ffd700;">
+                🔑 密码：<span style="font-weight:bold;font-size:18px;">9j4r</span>
+            </div>
+            <br>
+            <button class="modal-close" onclick="closeDownloadModal()">关闭</button>
         </div>
     </div>
 
@@ -1129,9 +1170,18 @@
             });
         }
 
+        function showDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('hidden');
+        }
+        function closeDownloadModal(e) {
+            if (!e || e.target === e.currentTarget || e.type === 'click') {
+                document.getElementById('downloadModal').classList.add('hidden');
+            }
+        }
+
         // ESC关闭弹窗
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') { closeModal(); closeDownloadModal(); }
         });
     </script>
 
