@@ -488,6 +488,11 @@
             line-height: 1.6;
         }
 
+        @keyframes rainbowShift {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
         /* ===== Footer ===== */
         .footer {
             text-align: center;
@@ -650,6 +655,143 @@
         }
         .form-submit.loading .spinner { display: inline-block; }
         .form-submit.loading .btn-text { display: none; }
+
+        /* ===== IV 百分位排序指标 ===== */
+
+        .pct-demo-wrap {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 28px;
+        }
+        .pct-var-row { margin-bottom: 22px; }
+        .pct-var-row:last-child { margin-bottom: 0; }
+        .pct-var-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .pct-var-name { font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .pct-var-val {
+            font-size: 12px;
+            color: #6b7280;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 10px;
+            border-radius: 6px;
+        }
+        .pct-track {
+            position: relative;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: visible;
+            cursor: pointer;
+        }
+        .pct-track-fill {
+            position: absolute;
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.35s ease;
+            pointer-events: none;
+        }
+        .pct-track-fill._high { background: rgba(239, 68, 68, 0.2); }
+        .pct-track-fill._mid { background: rgba(255, 255, 255, 0.06); }
+        .pct-track-fill._low { background: rgba(34, 197, 94, 0.15); }
+        .pct-threshold-line {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .pct-threshold-label {
+            position: absolute;
+            top: -18px;
+            font-size: 10px;
+            color: #6b7280;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .pct-zone-tag {
+            position: absolute;
+            bottom: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            pointer-events: none;
+        }
+        .pct-zone-tag._low { left: 8px; color: #ef4444; }
+        .pct-zone-tag._high { right: 8px; color: #06b6d4; }
+        .pct-cursor {
+            position: absolute;
+            top: -2px;
+            width: 6px;
+            height: 40px;
+            border-radius: 3px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 4;
+            transition: left 0.35s ease;
+        }
+        .pct-cursor.iv { background: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.4); }
+        .pct-cursor.price { background: #ffd700; box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+        .pct-cursor.opt { background: #e879f9; box-shadow: 0 0 8px rgba(232,121,249,0.4); }
+        .pct-drag-hint {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: rgba(255,255,255,0.25);
+            pointer-events: none;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+        .pct-signal-area {
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.4s;
+        }
+        .pct-signal-area._power { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); color: #ef4444; }
+        .pct-signal-area._duty { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.35); color: #06b6d4; }
+        .pct-signal-area._neutral { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); color: #6b7280; }
+        .pct-signal-detail { font-size: 12px; font-weight: 400; margin-top: 4px; color: #9ca3af; }
+        .pct-presets {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            justify-content: center;
+        }
+        .pct-preset {
+            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .pct-preset:hover { border-color: rgba(255, 107, 53, 0.4); color: #ff6b35; }
+        .pct-preset._active { background: rgba(255, 107, 53, 0.15); border-color: rgba(255, 107, 53, 0.4); color: #ff6b35; }
+        @media (max-width: 768px) {
+            .pct-demo-wrap { padding: 18px 12px; }
+            .pct-var-header { font-size: 12px; }
+            .pct-signal-area { font-size: 14px; }
+            .pct-presets { gap: 4px; }
+            .pct-preset { font-size: 10px; padding: 4px 10px; }
+        }
+
     </style>
 </head>
 <body>
@@ -718,9 +860,9 @@
                    onmouseover="this.style.background='rgba(255,107,53,0.25)';this.style.borderColor='rgba(255,107,53,0.5)';"
                    onmouseout="this.style.background='rgba(255,107,53,0.12)';this.style.borderColor='rgba(255,107,53,0.25)';">📖 使用说明</a>
                 <br><br>
-                <a href="https://leader.tbquant.net/download" target="_blank" style="color:#ff6b35;text-decoration:none;font-size:15px;">📥 软件下载</a>
-                &nbsp;|&nbsp;
-                <a href="javascript:void(0)" onclick="showDownloadModal()" style="color:#ff6b35;text-decoration:none;font-size:15px;">📦 策略下载</a>
+                <a href="https://leader.tbquant.net/download" target="_blank" style="display:inline-block;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);border-radius:10px;padding:10px 24px;font-size:16px;font-weight:700;color:#ff6b35;text-decoration:none;transition:all 0.3s;" onmouseover="this.style.background='rgba(255,107,53,0.25)';this.style.borderColor='rgba(255,107,53,0.5)';" onmouseout="this.style.background='rgba(255,107,53,0.12)';this.style.borderColor='rgba(255,107,53,0.25)';">📥 软件下载</a>
+                &nbsp;
+                <a href="javascript:void(0)" onclick="showDownloadModal()" style="display:inline-block;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);border-radius:10px;padding:10px 24px;font-size:16px;font-weight:700;color:#ff6b35;text-decoration:none;transition:all 0.3s;" onmouseover="this.style.background='rgba(255,107,53,0.25)';this.style.borderColor='rgba(255,107,53,0.5)';" onmouseout="this.style.background='rgba(255,107,53,0.12)';this.style.borderColor='rgba(255,107,53,0.25)';">📦 策略下载</a>
             </div>
             <h2 class="section-title">策略优势</h2>
             <p class="section-sub">手动调参 · 实时推演 ·自动选合约 · 归一化比较 · 多变量叠加 · 化繁为简 · 效率拉满 · 细节拉满</p>
@@ -746,9 +888,9 @@
                     <div class="feature-desc">标的价格/期权价格/隐含波动率，归一化百分位坐标比较，一眼看清机会。</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">末日轮进化</div>
-                    <div class="feature-desc">像明日边缘电影主人公一样，每次循环都比上次更强。</div>
+                    <div class="feature-icon">🔢</div>
+                    <div class="feature-title">报价指标排序</div>
+                    <div class="feature-desc">IV、标的价、期权价三维归一化排名，百分位直接嵌在报价里，三者状态一眼看清。</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🤝</div>
@@ -827,6 +969,108 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- IV 百分位排序指标 -->
+        <div class="section">
+            <h2 class="section-title">指标排序 · IV百分位</h2>
+            <p class="section-sub">排名法计算 · 免疫异常极值 · 三维归一化比较</p>
+
+            <div class="features" style="margin-bottom:32px;">
+                <div class="feature-card">
+                    <div class="feature-icon">🔢</div>
+                    <div class="feature-title">排名法 · 免疫极值</div>
+                    <div class="feature-desc">不用简单 min-max 归一化，而是<strong>计数排名</strong>：当前值在历史 N 根 Bar 中排第几？排位 ÷ 总数 = 百分位。即使历史中有极端异动也不会把区间拉偏。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">权力信号</div>
+                    <div class="feature-desc">IV 和期权价格<strong style="color:#22c55e;">双双低于 20% 分位</strong> → 定价扭曲、权利方有利。红色"<strong style="color:#ef4444;">权</strong>"标记提示买方机会窗口。</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">义务信号</div>
+                    <div class="feature-desc">IV 和期权价格<strong style="color:#06b6d4;">双双高于 80% 分位</strong> → 波动率高估、卖方有利。青色"<strong style="color:#06b6d4;">责</strong>"标记提示卖方/义务方窗口。</div>
+                </div>
+            </div>
+
+            <!-- 交互演示 -->
+            <div class="pct-demo-wrap">
+                <div style="font-size:14px;font-weight:600;margin-bottom:6px;">🎮 拖动滑块模拟 10 日百分位</div>
+                <div style="font-size:12px;color:#6b7280;margin-bottom:18px;">三个变量映射到 0-100 坐标 · 阈值 20/80 · P 方向标的价镜像，与期权价同向</div>
+
+                <div class="pct-var-row" id="pctRowIV">
+                    <div class="pct-var-header">
+                        <span class="pct-var-name">📊 隐含波动率 (IV)</span>
+                        <span class="pct-var-val" id="pctValIV">50%</span>
+                    </div>
+                    <div class="pct-track" id="pctTrackIV" onclick="pctClick(event, 'iv')">
+                        <div class="pct-track-fill _mid" id="pctFillIV" style="width:50%;"></div>
+                        <div class="pct-threshold-line" style="left:20%;"><span class="pct-threshold-label">20%</span></div>
+                        <div class="pct-threshold-line" style="left:80%;"><span class="pct-threshold-label">80%</span></div>
+                        <div class="pct-drag-hint">← 拖动试试 →</div>
+                        <div class="pct-zone-tag _low">权力区</div>
+                        <div class="pct-zone-tag _high">义务区</div>
+                        <div class="pct-cursor iv" id="pctCursorIV" style="left:50%;"></div>
+                    </div>
+                </div>
+
+                <div class="pct-var-row" id="pctRowPrice">
+                    <div class="pct-var-header">
+                        <span class="pct-var-name">📈 标的价格</span>
+                        <span class="pct-var-val" id="pctValPrice">50%</span>
+                    </div>
+                    <div class="pct-track" id="pctTrackPrice" onclick="pctClick(event, 'price')">
+                        <div class="pct-track-fill _mid" id="pctFillPrice" style="width:50%;"></div>
+                        <div class="pct-threshold-line" style="left:20%;"><span class="pct-threshold-label">20%</span></div>
+                        <div class="pct-threshold-line" style="left:80%;"><span class="pct-threshold-label">80%</span></div>
+                        <div class="pct-drag-hint">← 拖动试试 →</div>
+                        <div class="pct-zone-tag _low">低位</div>
+                        <div class="pct-zone-tag _high">高位</div>
+                        <div class="pct-cursor price" id="pctCursorPrice" style="left:50%;"></div>
+                    </div>
+                    <div style="font-size:10px;color:#6b7280;margin-top:3px;">P 方向自动镜像（100 - 原始百分位），与 C 方向逻辑一致</div>
+                </div>
+
+                <div class="pct-var-row" id="pctRowOpt">
+                    <div class="pct-var-header">
+                        <span class="pct-var-name">💰 期权价格</span>
+                        <span class="pct-var-val" id="pctValOpt">50%</span>
+                    </div>
+                    <div class="pct-track" id="pctTrackOpt" onclick="pctClick(event, 'opt')">
+                        <div class="pct-track-fill _mid" id="pctFillOpt" style="width:50%;"></div>
+                        <div class="pct-threshold-line" style="left:20%;"><span class="pct-threshold-label">20%</span></div>
+                        <div class="pct-threshold-line" style="left:80%;"><span class="pct-threshold-label">80%</span></div>
+                        <div class="pct-drag-hint">← 拖动试试 →</div>
+                        <div class="pct-zone-tag _low">权力区</div>
+                        <div class="pct-zone-tag _high">义务区</div>
+                        <div class="pct-cursor opt" id="pctCursorOpt" style="left:50%;"></div>
+                    </div>
+                </div>
+
+                <!-- 信号区 -->
+                <div class="pct-signal-area _neutral" id="pctSignal">
+                    — 无信号 —
+                    <div class="pct-signal-detail">IV 和期权价未同时触及阈值</div>
+                </div>
+
+                <!-- 预设场景 -->
+                <div style="text-align:center;margin-top:12px;font-size:11px;color:#6b7280;">👇 快速切换预设场景</div>
+                <div class="pct-presets" id="pctPresets">
+                    <button class="pct-preset" onclick="pctPreset(8,10,15)">🟢 双低 · 权力</button>
+                    <button class="pct-preset" onclick="pctPreset(85,88,92)">🔵 双高 · 义务</button>
+                </div>
+            </div>
+
+            <div style="max-width:700px;margin:32px auto 0;text-align:center;background:linear-gradient(90deg,rgba(255,107,53,0.08),rgba(220,38,38,0.08));border:1px solid rgba(255,107,53,0.2);border-radius:16px;padding:24px 20px;">
+                <div style="font-size:20px;font-weight:800;line-height:1.6;background:linear-gradient(90deg,#ff6b35,#ffd700,#22c55e,#06b6d4,#ff6b35);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:rainbowShift 3s linear infinite;">
+                    排序百分位直接嵌在报价里<br>
+                    三者状态一眼看清，省去大把翻阅合约的时间
+                </div>
+                <div style="font-size:13px;color:#ff6b35;margin-top:8px;">三个量纲统一映射到 0-100 坐标 · 背离和共振一目了然</div>
+            </div>
+        </div>
+
 
         <!-- How it works -->
         <div class="section" id="how">
@@ -976,7 +1220,10 @@
                 🔗 点击下载策略
             </a>
             <div style="margin-top:12px;font-size:14px;color:#ffd700;">
-                🔑 密码：<span style="font-weight:bold;font-size:18px;">9j4r</span>
+                🔑 密码：<span style="font-weight:bold;font-size:18px;color:#ffd700;">9j4r</span>
+                <span onclick="copyPwd(this)" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;vertical-align:middle;margin-left:4px;transition:all 0.3s;" title="点击复制">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </span>
             </div>
             <br>
             <button class="modal-close" onclick="closeDownloadModal()">关闭</button>
@@ -1068,9 +1315,9 @@
                                                 '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
                                                 '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
                                                 '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
-                                                '<button onclick="copyCodeStr(\'' + code + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">' +
+                                                '<button onclick="copyCodeStr(\'' + escJs(code) + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">' +
                                                 '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
-                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code + '</textarea></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + escHtml(code) + '</textarea></div>' +
                                                 // 信息网格
                                                 '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
                                                 '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
@@ -1091,9 +1338,9 @@
                                                 '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:16px;margin-bottom:12px;">' +
                                                 '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
                                                 '<span style="font-size:12px;color:#6b7280;">授权码</span>' +
-                                                '<button onclick="copyCodeStr(\'' + code2 + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">' +
+                                                '<button onclick="copyCodeStr(\'' + escJs(code2) + '\',this)" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">' +
                                                 '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>' +
-                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + code2 + '</textarea></div>' +
+                                                '<textarea readonly style="width:100%;background:rgba(0,0,0,0.5);border:none;border-radius:8px;padding:12px;color:#ffd700;font-family:monospace;font-size:12px;resize:none;outline:none;min-height:60px;">' + escHtml(code2) + '</textarea></div>' +
                                                 '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
                                                 '<div style="background:rgba(10,10,15,0.5);border-radius:12px;padding:12px;">' +
                                                 '<div style="font-size:12px;color:#6b7280;margin-bottom:4px;">战友智大领峰用户名</div>' +
@@ -1157,17 +1404,64 @@
             }));
         }
 
+        // 安全的剪贴板写入（兼容非 HTTPS / 本地文件）
+        function safeCopy(text, onSuccess) {
+            // 优先使用 Clipboard API（需 HTTPS）
+            if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(onSuccess).catch(function() {
+                    fallbackCopy(text, onSuccess);
+                });
+            } else {
+                fallbackCopy(text, onSuccess);
+            }
+        }
+        function fallbackCopy(text, onSuccess) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            ta.style.top = '-9999px';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                var ok = document.execCommand('copy');
+                if (ok && onSuccess) onSuccess();
+            } catch (e) {
+                // 静默失败
+            }
+            document.body.removeChild(ta);
+        }
+
         function copyQQ() {
-            navigator.clipboard.writeText("666181683");
+            safeCopy("666181683");
+        }
+
+        function copyPwd(btn) {
+            safeCopy("9j4r", function() {
+                btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(function() {
+                    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                }, 2000);
+            });
         }
 
         function copyCodeStr(code, btn) {
-            navigator.clipboard.writeText(code).then(function() {
+            safeCopy(code, function() {
                 btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
                 setTimeout(function() {
                     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
                 }, 2000);
             });
+        }
+
+        // HTML 转义（防止 code 中特殊字符破坏 DOM）
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        // JS 字符串字面量转义（用于 onclick="copyCodeStr('...')"）
+        function escJs(s) {
+            return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         }
 
         function showDownloadModal() {
@@ -1183,6 +1477,111 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') { closeModal(); closeDownloadModal(); }
         });
+
+        // ===== IV 百分位演示交互 =====
+        var pctVals = { iv: 50, price: 50, opt: 50 };
+
+        function pctSetPct(key, val) {
+            val = Math.max(0, Math.min(100, Math.round(val)));
+            pctVals[key] = val;
+
+            // 更新轨道
+            var cursorEl = document.getElementById('pctCursor' + {iv:'IV',price:'Price',opt:'Opt'}[key]);
+            var fillEl = document.getElementById('pctFill' + {iv:'IV',price:'Price',opt:'Opt'}[key]);
+            var valEl = document.getElementById('pctVal' + {iv:'IV',price:'Price',opt:'Opt'}[key]);
+
+            cursorEl.style.left = val + '%';
+            fillEl.style.width = val + '%';
+
+            // 填充色
+            fillEl.classList.remove('_low', '_mid', '_high');
+            if (val < 20) fillEl.classList.add('_low');
+            else if (val > 80) fillEl.classList.add('_high');
+            else fillEl.classList.add('_mid');
+
+            // 标签颜色和文字
+            if (val < 20) valEl.style.color = '#22c55e';
+            else if (val > 80) valEl.style.color = '#ef4444';
+            else valEl.style.color = '#6b7280';
+            valEl.textContent = val + '%';
+
+            // 判断信号
+            var iv = pctVals.iv, price = pctVals.price, opt = pctVals.opt;
+            var sig = document.getElementById('pctSignal');
+            var isPower = iv < 20 && opt < 20;
+            var isDuty = iv > 80 && opt > 80;
+            var powerDiv = isPower && opt < price;  // 权力 + 期权价低于标的 → 背离
+            var dutyDiv = isDuty && opt > price;    // 义务 + 期权价高于标的 → 背离
+
+            sig.classList.remove('_power', '_duty', '_neutral');
+            if (powerDiv) {
+                sig.classList.add('_power');
+                sig.innerHTML = '🔥 权力信号 · 背离！<div class="pct-signal-detail">IV=' + iv + '% · 期权价=' + opt + '% < 标的价=' + price + '% → 期权定价滞后，权利方强窗口</div>';
+            } else if (isPower) {
+                sig.classList.add('_power');
+                sig.innerHTML = '🔥 权力信号<div class="pct-signal-detail">IV=' + iv + '% · 期权价=' + opt + '% 双双低于 20% 分位 → 权利方机会窗口</div>';
+            } else if (dutyDiv) {
+                sig.classList.add('_duty');
+                sig.innerHTML = '🛡️ 义务信号 · 背离！<div class="pct-signal-detail">IV=' + iv + '% · 期权价=' + opt + '% > 标的价=' + price + '% → 期权过热，义务方强窗口</div>';
+            } else if (isDuty) {
+                sig.classList.add('_duty');
+                sig.innerHTML = '🛡️ 义务信号<div class="pct-signal-detail">IV=' + iv + '% · 期权价=' + opt + '% 双双高于 80% 分位 → 义务方机会窗口</div>';
+            } else {
+                sig.classList.add('_neutral');
+                sig.innerHTML = '— 无信号 —<div class="pct-signal-detail">IV=' + iv + '% · 期权价=' + opt + '% · 标的价=' + price + '% 未同时触及阈值</div>';
+            }
+        }
+
+        function pctClick(e, key) {
+            var rect = e.currentTarget.getBoundingClientRect();
+            var pct = Math.round((e.clientX - rect.left) / rect.width * 100);
+            pctSetPct(key, pct);
+        }
+
+        // 触摸/拖拽支持
+        ['iv','price','opt'].forEach(function(key) {
+            var el = document.getElementById('pctTrack' + {iv:'IV',price:'Price',opt:'Opt'}[key]);
+            var dragging = false;
+
+            function dragStart(e) {
+                dragging = true;
+                e.preventDefault();
+                var rect = el.getBoundingClientRect();
+                var pct = Math.round(((e.touches ? e.touches[0].clientX : e.clientX) - rect.left) / rect.width * 100);
+                pctSetPct(key, pct);
+            }
+            function dragMove(e) {
+                if (!dragging) return;
+                e.preventDefault();
+                var rect = el.getBoundingClientRect();
+                var pct = Math.round(((e.touches ? e.touches[0].clientX : e.clientX) - rect.left) / rect.width * 100);
+                pctSetPct(key, pct);
+            }
+            function dragEnd() { dragging = false; }
+
+            el.addEventListener('mousedown', dragStart);
+            el.addEventListener('mousemove', dragMove);
+            el.addEventListener('mouseup', dragEnd);
+            el.addEventListener('mouseleave', dragEnd);
+            el.addEventListener('touchstart', dragStart, {passive: false});
+            el.addEventListener('touchmove', dragMove, {passive: false});
+            el.addEventListener('touchend', dragEnd);
+        });
+
+        function pctPreset(iv, price, opt) {
+            pctSetPct('iv', iv);
+            pctSetPct('price', price);
+            pctSetPct('opt', opt);
+            var btns = document.getElementById('pctPresets').querySelectorAll('.pct-preset');
+            btns.forEach(function(b) { b.classList.remove('_active'); });
+            var activeText = '';
+            if (iv < 20 && opt < 20) activeText = '双低';
+            else if (iv > 80 && opt > 80) activeText = '双高';
+            btns.forEach(function(b) {
+                if (b.textContent.indexOf(activeText) >= 0) b.classList.add('_active');
+            });
+        }
+
     </script>
 
 
